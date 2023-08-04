@@ -1,14 +1,22 @@
 const express =  require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
 const { body, validationResult } = require('express-validator');
 const User = require('../models/User');
 
+dotenv.config();
 const router = express.Router();
 
 router.get('/', async (req, res) => {
     try {
         const user = await User.find();
+        const data = {
+            id: user[0].id
+        }
+
+        const token = jwt.sign(data, process.env.SECRET_KEY);
+        console.log(token); 
         res.json(user);
     } catch (err) {
         res.json(err);
