@@ -2,25 +2,24 @@
 const mysql = require('mysql2/promise');
 
 const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: 'Fast12##',
-    database: 'sys',
-    connectionLimit: 10, // Adjust as needed
+  host: 'localhost',
+  user: 'root',
+  password: 'Fast12##',
+  database: 'sys',
+  connectionLimit: 10, // Adjust as needed
 });
 
-const connectDB = async() => {
-    pool.getConnection()
+const connectDB = async () => {
+  pool.getConnection()
     .then((connection) => {
-        console.log('Connected to MySQL database');
-        connection.release(); // Release the connection when done
+      console.log('Connected to MySQL database');
+      connection.release(); // Release the connection when done
     })
     .catch((err) => {
-        console.error('Error connecting to MySQL:', err);
+      console.error('Error connecting to MySQL:', err);
     });
-}
+};
 module.exports = connectDB;
-
 
 // with ORM
 const { Sequelize } = require('sequelize');
@@ -35,11 +34,11 @@ module.exports = sequelize;
 const { Client } = require('pg');
 
 const db = new Client({
-  host: "localhost",
-  user: "postgres",
-  port: "5432",
-  password: "shakir",
-  database: "postest",
+  host: 'localhost',
+  user: 'postgres',
+  port: '5432',
+  password: 'shakir',
+  database: 'postest',
 });
 
 module.exports = connectDB;
