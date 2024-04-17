@@ -93,8 +93,8 @@ router.post('/createuser', [
 // get Details of current user
 router.post('/getuser', authorize, async (req, res) => {
   try {
-    const { email } = req.body;
-    const user = await User.findById({ userid }).select("-password");
+    const userid = req.user.id;
+    const user = await User.findById(userid).select("-password");
     
     if(!user) {
       return res.status(400).json({ error: 'No such user exists' });
@@ -102,7 +102,7 @@ router.post('/getuser', authorize, async (req, res) => {
 
     res.json(user);
   } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error });
   }
 });
 
