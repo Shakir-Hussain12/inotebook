@@ -1,19 +1,22 @@
-GET http://localhost:5000/api/auth/
+# getDetails
+GET http://localhost:5000/api/v1/auth/
 
-# POST http://localhost:5000/api/auth/createuser
-# Content-Type: application/json
+# create user
+POST http://localhost:5000/api/auth/createuser
+Content-Type: application/json
 
-# {
-#     "name": "Shakir",
-#     "email": "shakir@gmail.com",
-#     "password": "123456"
-# }
+{
+    "name": "Shakir",
+    "email": "shakir@gmail.com",
+    "password": "123456"
+}
 
-# POST http://localhost:5000/api/auth/login
-# Content-Type: application/json
+# try login
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
 
-# {
-#     "email": "shakir@gmail.com",
-#     "password": "123456"
-# }
+{
+    "email": "shakir@gmail.com",
+    "password": "123456"
+}
 

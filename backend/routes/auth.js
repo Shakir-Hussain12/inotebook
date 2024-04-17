@@ -6,7 +6,9 @@ const { body, validationResult } = require('express-validator');
 const User = require('../models/User');
 
 const router = express.Router();
+const authorize = require('../middleware/authorize');
 
+// base route
 router.get('/', async (req, res) => {
   try {
     const user = await User.find();
@@ -16,6 +18,7 @@ router.get('/', async (req, res) => {
   }
 });
 
+// login route
 router.post('/login', [
   body('email', 'Invalid Email').isEmail(),
   body('password', 'Invalid Password').isLength({ min: 6 }),
@@ -36,19 +39,20 @@ router.post('/login', [
       return res.status(400).json({ error: "Password doesn't match" });
     }
 
-    const data = {
+    const payload = {
       user: {
         id: user.id,
       },
     };
 
-    const token = jwt.sign(data, process.env.SECRET_KEY);
+    const token = jwt.sign(payload, process.env.SECRET_KEY);
     res.json({ token });
   } catch (err) {
     res.status(500).send('Internal Server Error');
   }
 });
 
+// sign-up route
 router.post('/createuser', [
   body('name', 'Invalid Name').isLength({ min: 3, max: 15 }),
   body('email', 'Invalid Email').isEmail(),
@@ -68,12 +72,37 @@ router.post('/createuser', [
         email: req.body.email,
         password: secPass,
       });
-      res.json({ response: 'User created successfully!', content: user });
+
+      const payload = {
+        user: {
+          id: user.id,
+        },
+      };
+  
+      const token = jwt.sign(payload, process.env.SECRET_KEY);
+      res.json({ response: 'User created successfully!', token });
+
     } else {
       res.json({ response: "Couldn't create user", error: 'Email already in use' });
     }
   } catch (err) {
     res.status(500).send('Internal Server Error');
+  }
+});
+
+// get Details of current user
+router.post('/getuser', authorize, async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findById({ userid }).select("-password");
+    
+    if(!user) {
+      return res.status(400).json({ error: 'No such user exists' });
+    }
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
