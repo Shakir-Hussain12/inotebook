@@ -40,10 +40,23 @@ router.post('/', [
 router.delete('/:id', authorize, async (req, res) => {
   try {
     const { id } = req.params; 
-    await Note.deleteMany({ user: req.user.id, _id: id});
+    await Note.deleteMany({ user: req.user?.id, _id: id});
     res.status(200).send('Note Deleted');
   } catch (err) {
     res.status(500).json({Error: 'Internal Server Error'});
   }
 });
+
+//to update a note
+router.patch('/:id', authorize, async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Note.findOneAndUpdate({ user: req.user?.id, _id: id }, req.body);
+    await Note.replaceOne({ user: req.user?.id, _id: id }, req.body);
+    res.status(200).send('Note Updated');
+  } catch (err) {
+    res.status(500).json({Error: 'Internal Server Error'});
+  }
+});
+
 module.exports = router;
