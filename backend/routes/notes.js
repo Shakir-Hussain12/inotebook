@@ -39,8 +39,14 @@ router.post('/', [
 // to delete a note
 router.delete('/:id', authorize, async (req, res) => {
   try {
-    const { id } = req.params; 
-    await Note.deleteMany({ user: req.user?.id, _id: id});
+    const { id } = req.params;
+
+    const note = await Note.findOne({ user: req.user?.id, _id: id });
+    if (!note) {
+      return res.status(404).send('Note Not Found');
+    }
+
+    await Note.deleteOne({ user: req.user?.id, _id: id});
     res.status(200).send('Note Deleted');
   } catch (err) {
     res.status(500).json({Error: 'Internal Server Error'});
@@ -51,6 +57,12 @@ router.delete('/:id', authorize, async (req, res) => {
 router.put('/:id', authorize, async (req, res) => {
   try {
     const { id } = req.params;
+    
+    const note = await Note.findOne({ user: req.user?.id, _id: id });
+    if (!note) {
+      return res.status(404).send('Note Not Found');
+    }
+
     await Note.findOneAndUpdate({ user: req.user?.id, _id: id }, req.body);
     res.status(200).send('Note Updated');
   } catch (err) {
