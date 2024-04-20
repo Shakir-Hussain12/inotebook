@@ -1,5 +1,5 @@
 const express = require('express');
-const Notes = require('../models/Notes');
+const Note = require('../models/Note');
 const { body, validationResult } = require('express-validator');
 
 const router = express.Router();
@@ -8,7 +8,7 @@ const authorize = require('../middleware/authorize');
 // base route
 router.get('/', authorize, async (req, res) => {
   try {
-    const notes = await Notes.find({ user: req.user.id }) || [];
+    const notes = await Note.find({ user: req.user.id }) || [];
     res.status(200).json(notes);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
@@ -26,7 +26,7 @@ router.post('/', [
   }
 
   try {
-    await Notes.create({
+    await Note.create({
       user: req.user.id,
       ...req.body
     });
@@ -40,7 +40,7 @@ router.post('/', [
 router.delete('/:id', authorize, async (req, res) => {
   try {
     const { id } = req.params; 
-    await Notes.deleteMany({ user: req.user.id, _id: id});
+    await Note.deleteMany({ user: req.user.id, _id: id});
     res.status(200).send('Note Deleted');
   } catch (err) {
     res.status(500).json({Error: 'Internal Server Error'});
