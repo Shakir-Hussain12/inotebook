@@ -1,28 +1,49 @@
 const express = require('express');
+const Notes = require('../models/Notes');
+const { body, validationResult } = require('express-validator');
 
 const router = express.Router();
-const { body, validationResult } = require('express-validator');
-const Note = require('../models/Notes');
+const authorize = require('../middleware/authorize');
 
-router.get('/', (req, res) => {
-  res.send('notes page');
-});
-
-router.post('/', [
-  body('title').isLength({ min: 6, max: 20 }),
-  body('description').isLength({ min: 10, max: 100 }),
-], (req, res) => {
-  const errs = validationResult(req.body);
-  if (!errs.isEmpty()) {
-    return res.status(400).json({ errs: errs.array() });
-  }
+// base route
+router.get('/', authorize, async (req, res) => {
   try {
-    Note.create(req.body)
-      .then((note) => res.json({ response: 'Note created successfully!', content: note }))
-      .catch((err) => res.json({ response: "Couldn't create note", err: err.message }));
-  } catch (err) {
-    res.send(err.message);
+    const notes = await Notes.find({ user: req.user.id }) || [];
+    res.status(200).json(notes);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
+// add new note
+router.post('/', [
+  body('title', '10 < Title Length < 20').isLength({ min: 10, max: 20 }),
+  body('description', 'Description should be greate than 10 characters').isLength({ min: 10 }),
+], authorize, async (req, res) => {
+  const err = validationResult(req);
+  if (!err.isEmpty()) {
+    return res.status(400).json({ errs: err.array() });
+  }
+
+  try {
+    await Notes.create({
+      user: req.user.id,
+      ...req.body
+    });
+    res.status(200).send('Note Created');
+  } catch (err) {
+    res.status(500).Json({Error: 'Internal Server Error'});
+  }
+});
+
+// to delete a note
+router.delete('/:id', authorize, async (req, res) => {
+  try {
+    const { id } = req.params; 
+    await Notes.deleteMany({ user: req.user.id, _id: id});
+    res.status(200).send('Note Deleted');
+  } catch (err) {
+    res.status(500).json({Error: 'Internal Server Error'});
+  }
+});
 module.exports = router;
