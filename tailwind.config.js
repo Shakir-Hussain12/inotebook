@@ -1,3 +1,6 @@
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -7,7 +10,7 @@ module.exports = {
     extend: {},
   },
   plugins: [
-    require('tailwindcss'),
-    require('autoprefixer'),
+    tailwindcss,
+    autoprefixer,
   ],
 };
