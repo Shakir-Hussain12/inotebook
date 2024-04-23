@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
@@ -93,34 +92,31 @@ const Navbar = () => (
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-4 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
-                        {({ active }) => (
-                          <NavLink
-                            to="/"
-                            className={({ isActive }) => getClassName(isActive, 'big', 'two')}
-                          >
-                            Your Profile
-                          </NavLink>
-                        )}
+                        <NavLink
+                          to="/"
+                          className={({ isActive }) => getClassName(isActive, 'big', 'two')}
+                        >
+                          Your Profile
+                        </NavLink>
                       </Menu.Item>
+
                       <Menu.Item>
-                        {({ active }) => (
-                          <NavLink
-                            to="/about"
-                            className={({ isActive }) => getClassName(isActive, 'big', 'two')}
-                          >
-                            About
-                          </NavLink>
-                        )}
+                        <NavLink
+                          to="/about"
+                          className={({ isActive }) => getClassName(isActive, 'big', 'two')}
+                        >
+                          About
+                        </NavLink>
                       </Menu.Item>
+
                       <Menu.Item>
-                        {({ active }) => (
-                          <NavLink
-                            to="/"
-                            className={({ isActive }) => getClassName(isActive, 'big', 'two')}
-                          >
-                            Sign out
-                          </NavLink>
-                        )}
+                        <NavLink
+                          to="/"
+                          className={({ isActive }) => getClassName(isActive, 'big', 'two')}
+                        >
+                          Sign out
+                        </NavLink>
+
                       </Menu.Item>
                     </Menu.Items>
                   </Transition>
