@@ -46,9 +46,9 @@ router.post('/login', [
     };
 
     const token = jwt.sign(payload, process.env.SECRET_KEY);
-    res.json({ token });
+    return res.json({ token });
   } catch (err) {
-    res.status(500).send('Internal Server Error');
+    return res.status(500).send('Internal Server Error');
   }
 });
 
@@ -78,15 +78,13 @@ router.post('/createuser', [
           id: user.id,
         },
       };
-  
-      const token = jwt.sign(payload, process.env.SECRET_KEY);
-      res.json({ response: 'User created successfully!', token });
 
-    } else {
-      res.json({ response: "Couldn't create user", error: 'Email already in use' });
+      const token = jwt.sign(payload, process.env.SECRET_KEY);
+      return res.json({ response: 'User created successfully!', token });
     }
+    return res.json({ response: "Couldn't create user", error: 'Email already in use' });
   } catch (err) {
-    res.status(500).send('Internal Server Error');
+    return res.status(500).send('Internal Server Error');
   }
 });
 
@@ -94,15 +92,15 @@ router.post('/createuser', [
 router.post('/getuser', authorize, async (req, res) => {
   try {
     const userid = req.user.id;
-    const user = await User.findById(userid).select("-password");
-    
-    if(!user) {
+    const user = await User.findById(userid).select('-password');
+
+    if (!user) {
       return res.status(400).json({ error: 'No such user exists' });
     }
 
-    res.json(user);
+    return res.json(user);
   } catch (error) {
-    res.status(500).json({ error });
+    return res.status(500).json({ error });
   }
 });
 
