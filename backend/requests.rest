@@ -1,0 +1,22 @@
+# getDetails
+GET http://localhost:5000/api/v1/auth/
+
+# create user
+POST http://localhost:5000/api/auth/createuser
+Content-Type: application/json
+
+{
+    "name": "Shakir",
+    "email": "shakir@gmail.com",
+    "password": "123456"
+}
+
+# try login
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "shakir@gmail.com",
+    "password": "123456"
+}
+
