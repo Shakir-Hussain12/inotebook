@@ -4,6 +4,7 @@ import NoteContext from './noteContext';
 // eslint-disable-next-line react/prop-types
 const NoteState = ({ children }) => {
   const [notes, setNotes] = useState([]);
+  const [activeForm, setactiveForm] = useState(false);
 
   useEffect(() => {
     fetch('http://localhost:5000/api/notes/', {
@@ -17,7 +18,10 @@ const NoteState = ({ children }) => {
   }, []);
 
   return (
-    <NoteContext.Provider value={{ notes, setNotes }}>
+    <NoteContext.Provider value={{
+      notes, setNotes, activeForm, setactiveForm,
+    }}
+    >
       {children}
     </NoteContext.Provider>
   );
