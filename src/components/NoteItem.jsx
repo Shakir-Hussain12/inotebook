@@ -41,7 +41,7 @@ const NoteItem = ({ data: { tag, title, description } }) => (
 );
 
 NoteItem.propTypes = {
-  note: PropTypes.shape({
+  data: PropTypes.shape({
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     tag: PropTypes.string.isRequired,

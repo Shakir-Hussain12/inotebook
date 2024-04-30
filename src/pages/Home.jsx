@@ -27,7 +27,13 @@ const Home = () => {
         activeForm ? <NoteForm /> : null
       }
 
-      <h3>My Notes</h3>
+      <span className="relative flex justify-center mt-3 mb-3">
+        <div
+          className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-transparent bg-gradient-to-r from-transparent via-gray-500 to-transparent opacity-75"
+        />
+
+        <span className="relative z-10 bg-white uppercase text-2xl">My Notes</span>
+      </span>
       {
           notes.map((note) => (
             <NoteItem key={note[id]} data={note} />
