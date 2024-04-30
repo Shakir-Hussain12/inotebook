@@ -1,6 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-// eslint-disable-next-line react/prop-types
 const NoteItem = ({ data: { tag, title, description } }) => (
   <article className="rounded-xl bg-white p-4 ring ring-indigo-50 sm:p-6 lg:p-8">
     <div className="flex items-start sm:gap-8">
@@ -39,5 +39,13 @@ const NoteItem = ({ data: { tag, title, description } }) => (
     </div>
   </article>
 );
+
+NoteItem.propTypes = {
+  note: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    tag: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 export default NoteItem;
