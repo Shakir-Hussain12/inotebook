@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import Navbar from '../components/Navbar';
 import noteContext from '../context/notes/noteContext';
 import NoteForm from '../components/NoteForm';
+import NoteItem from '../components/NoteItem';
 
 const Home = () => {
   const context = useContext(noteContext);
@@ -10,6 +11,7 @@ const Home = () => {
   return (
     <>
       <Navbar />
+
       {
         !activeForm ? (
           <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 mt-1 float-end me-2" onClick={() => setactiveForm(true)}>
@@ -20,20 +22,15 @@ const Home = () => {
           </button>
         ) : null
       }
+
       {
         activeForm ? <NoteForm /> : null
       }
+
       <h3>My Notes</h3>
       {
           notes.map((note) => (
-            <div className="noteitem" key={note[id]}>
-              <div className="title">
-                {note.title}
-                {' '}
-                <span className="tag">{note.tag}</span>
-              </div>
-              <div className="description">{note.description}</div>
-            </div>
+            <NoteItem key={note[id]} data={note} />
           ))
         }
     </>

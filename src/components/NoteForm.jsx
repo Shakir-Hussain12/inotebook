@@ -28,7 +28,7 @@ const NoteForm = () => {
               </label>
 
               <label htmlFor="Tag">
-                Select a Tag
+                <span>Type</span>
                 <select id="Tag" name="Tag" aria-label="Tag Control">
                   <option value="General">General</option>
                   <option value="Specific">Specific</option>
