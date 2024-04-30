@@ -7,7 +7,14 @@ module.exports = {
     './src/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      spacing: {
+        99: '550px',
+      },
+      screens: {
+        xs: '200px',
+      },
+    },
   },
   plugins: [
     tailwindcss,
