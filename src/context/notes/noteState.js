@@ -5,6 +5,7 @@ import NoteContext from './noteContext';
 const NoteState = ({ children }) => {
   const [notes, setNotes] = useState([]);
   const [activeForm, setactiveForm] = useState(false);
+  const [isEditable, setIsEditable] = useState(false);
 
   useEffect(() => {
     fetch('http://localhost:5000/api/notes/', {
@@ -19,7 +20,7 @@ const NoteState = ({ children }) => {
 
   return (
     <NoteContext.Provider value={{
-      notes, setNotes, activeForm, setactiveForm,
+      notes, setNotes, activeForm, setactiveForm, isEditable, setIsEditable,
     }}
     >
       {children}
