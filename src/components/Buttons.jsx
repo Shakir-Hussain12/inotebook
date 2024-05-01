@@ -1,6 +1,14 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import noteContext from '../context/notes/noteContext';
+
+const config = {
+  headers: {
+    'Content-Type': 'application/json',
+    'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYxZjc1YjQ4NTViZTFjMDUzMmYyMDQ5In0sImlhdCI6MTcxNDI5MzA4NX0.nbxQqBMvi_5jbM6u5ntoiG5vKVG64sqOZz8tumuZbLo',
+  },
+};
 
 const Buttons = ({
   data: {
@@ -16,21 +24,30 @@ const Buttons = ({
     inputRef.current.focus();
   };
 
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`http://localhost:5000/api/notes/${_id}`, config);
+      return 1;
+    } catch (error) {
+      return error;
+    }
+  };
+
   const handleSave = async () => {
-    await fetch(`http://localhost:5000/api/notes/${_id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYxZjc1YjQ4NTViZTFjMDUzMmYyMDQ5In0sImlhdCI6MTcxNDI5MzA4NX0.nbxQqBMvi_5jbM6u5ntoiG5vKVG64sqOZz8tumuZbLo',
-      },
-      body: JSON.stringify({
-        tag: noteTag,
-        title: noteTitle,
-        description: noteDescription,
-      }),
-    });
+    const payload = {
+      tag: noteTag,
+      title: noteTitle,
+      description: noteDescription,
+    };
+
+    try {
+      await axios.put(`http://localhost:5000/api/notes/${_id}`, payload, config);
+    } catch (error) {
+      console.log(error);
+    }
 
     context.setIsEditable(false);
+    return 1;
   };
 
   return (
@@ -61,6 +78,7 @@ const Buttons = ({
       <button
         type="button"
         className="inline-flex items-center gap-2 rounded-md bg-white px-4 py-2 text-sm text-red-500 shadow-sm focus:relative"
+        onClick={() => handleDelete()}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
