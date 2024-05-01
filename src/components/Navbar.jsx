@@ -107,7 +107,7 @@ const Navbar = () => (
 
                       <Menu.Item>
                         <NavLink
-                          to="/"
+                          to="/SignUp"
                           className={({ isActive }) => getClassName(isActive, 'big', 'two')}
                         >
                           Sign out
