@@ -37,8 +37,9 @@ const NoteItem = ({
               className="rounded border border-indigo-500 bg-indigo-500 px-3 py-1.5 text-[10px] font-medium text-white"
               disabled={!isEditable}
               onChange={(e) => setNoteTag(e.target.value)}
+              defaultValue={tag}
             >
-              <option value={noteTag}>{tag}</option>
+              <option value="General">General</option>
               <option value="Specific">Specific</option>
             </select>
 

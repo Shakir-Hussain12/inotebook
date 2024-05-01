@@ -9,6 +9,13 @@ const Buttons = ({
 }) => {
   const context = useContext(noteContext);
 
+  const handleEdit = () => {
+    context.setIsEditable(!context.isEditable);
+    const newRef = { ...inputRef };
+    newRef.current.disabled = false;
+    inputRef.current.focus();
+  };
+
   const handleSave = async () => {
     await fetch(`http://localhost:5000/api/notes/${_id}`, {
       method: 'PUT',
@@ -31,7 +38,7 @@ const Buttons = ({
       <button
         type="button"
         className={`inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm text-blue-500 hover:text-gray-700 focus:relative ${context.isEditable ? 'hidden' : 'block'}`}
-        onClick={() => { context.setIsEditable(!context.isEditable); inputRef.current.focus(); }}
+        onClick={() => handleEdit()}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
