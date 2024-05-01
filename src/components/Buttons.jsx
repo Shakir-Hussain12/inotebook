@@ -1,15 +1,37 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import noteContext from '../context/notes/noteContext';
 
-const Buttons = () => {
+const Buttons = ({
+  data: {
+    _id, noteTag, noteTitle, noteDescription,
+  }, inputRef,
+}) => {
   const context = useContext(noteContext);
 
+  const handleSave = async () => {
+    await fetch(`http://localhost:5000/api/notes/${_id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYxZjc1YjQ4NTViZTFjMDUzMmYyMDQ5In0sImlhdCI6MTcxNDI5MzA4NX0.nbxQqBMvi_5jbM6u5ntoiG5vKVG64sqOZz8tumuZbLo',
+      },
+      body: JSON.stringify({
+        tag: noteTag,
+        title: noteTitle,
+        description: noteDescription,
+      }),
+    });
+
+    context.setIsEditable(false);
+  };
+
   return (
-    <div className="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1">
+    <div className="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1 gap-x-4">
       <button
         type="button"
-        className="inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm text-blue-500 hover:text-gray-700 focus:relative"
-        onClick={() => context.setIsEditable(!context.isEditable)}
+        className={`inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm text-blue-500 hover:text-gray-700 focus:relative ${context.isEditable ? 'hidden' : 'block'}`}
+        onClick={() => { context.setIsEditable(!context.isEditable); inputRef.current.focus(); }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -54,12 +76,22 @@ const Buttons = () => {
       <button
         type="submit"
         className={`inline-flex items-center gap-2 rounded-md bg-slate-800 text-green px-4 py-2 text-sm shadow-sm focus:relative ${context.isEditable ? 'block' : 'hidden'}`}
-        onClick={() => context.setIsEditable(!context.isEditable)}
+        onClick={() => handleSave()}
       >
         Save
       </button>
     </div>
   );
+};
+
+Buttons.propTypes = {
+  data: PropTypes.shape({
+    noteTag: PropTypes.string.isRequired,
+    noteTitle: PropTypes.string.isRequired,
+    noteDescription: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
+  }).isRequired,
+  inputRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) }).isRequired,
 };
 
 export default Buttons;
