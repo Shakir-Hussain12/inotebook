@@ -25,7 +25,7 @@ const getClassName = (isActive, size, type) => classNames(
 
 const Navbar = () => (
   <>
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure as="nav" className="bg-gray-800 mb-1">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">

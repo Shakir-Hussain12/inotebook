@@ -8,6 +8,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        green: '#00ff00',
+      },
       spacing: {
         99: '550px',
       },
