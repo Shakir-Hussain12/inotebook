@@ -27,6 +27,7 @@ const Buttons = ({
   const handleDelete = async () => {
     try {
       await axios.delete(`http://localhost:5000/api/notes/${_id}`, config);
+      window.location.reload();
       return 1;
     } catch (error) {
       return error;
