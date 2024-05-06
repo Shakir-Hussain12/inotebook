@@ -1,15 +1,13 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import noteContext from '../context/notes/noteContext';
+import authContext from '../context/notes/authContext';
 
 const SignUp = () => {
   const { isRegistering, setIsRegistering } = useContext(noteContext);
-  const [user, setUser] = useState({
-    first_name: '',
-    last_name: '',
-    email: '',
-    password: '',
-  });
+  const {
+    user, setUser, Login,
+  } = useContext(authContext);
 
   return (
     <section className="bg-white">
@@ -64,7 +62,7 @@ const SignUp = () => {
                       name="first_name"
                       className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                       onChange={(e) => setUser({ ...user, [e.target.name]: e.target.value })}
-                      defaultValue={user.first_name}
+                      value={user.first_name}
                     />
                   </div>
 
@@ -79,7 +77,7 @@ const SignUp = () => {
                       name="last_name"
                       className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                       onChange={(e) => setUser({ ...user, [e.target.name]: e.target.value })}
-                      defaultValue={user.last_name}
+                      value={user.last_name}
                     />
                   </div>
                 </>
@@ -94,7 +92,7 @@ const SignUp = () => {
                   name="email"
                   className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                   onChange={(e) => setUser({ ...user, [e.target.name]: e.target.value })}
-                  defaultValue={user.email}
+                  value={user.email}
                 />
               </div>
 
@@ -107,7 +105,7 @@ const SignUp = () => {
                   name="password"
                   className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                   onChange={(e) => setUser({ ...user, [e.target.name]: e.target.value })}
-                  defaultValue={user.password}
+                  value={user.password}
                 />
               </div>
 
@@ -115,6 +113,7 @@ const SignUp = () => {
                 <button
                   type="button"
                   className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
+                  onClick={() => Login(user)}
                 >
                   { isRegistering ? 'Register' : 'Login' }
                 </button>
