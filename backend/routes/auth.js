@@ -54,7 +54,7 @@ router.post('/login', [
 
 // sign-up route
 router.post('/createuser', [
-  body('name', 'Invalid Name').isLength({ min: 3, max: 15 }),
+  body('name', 'Invalid Name').isLength({ min: 3}),
   body('email', 'Invalid Email').isEmail(),
   body('password', 'Invalid Password').isLength({ min: 6 }),
 ], async (req, res) => {

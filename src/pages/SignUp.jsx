@@ -6,7 +6,7 @@ import authContext from '../context/notes/authContext';
 const SignUp = () => {
   const { isRegistering, setIsRegistering } = useContext(noteContext);
   const {
-    user, setUser, Login,
+    user, setUser, Login, Register,
   } = useContext(authContext);
 
   return (
@@ -113,7 +113,14 @@ const SignUp = () => {
                 <button
                   type="button"
                   className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
-                  onClick={() => Login(user)}
+                  onClick={() => {
+                    if (isRegistering) {
+                      Register(user);
+                    } else {
+                      Login(user);
+                    }
+                    setIsRegistering(false);
+                  }}
                 >
                   { isRegistering ? 'Register' : 'Login' }
                 </button>
