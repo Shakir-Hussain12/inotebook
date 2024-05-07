@@ -57,6 +57,7 @@ const SignUp = () => {
                     </label>
 
                     <input
+                      required
                       type="text"
                       id="FirstName"
                       name="first_name"
@@ -72,6 +73,7 @@ const SignUp = () => {
                     </label>
 
                     <input
+                      required
                       type="text"
                       id="LastName"
                       name="last_name"
@@ -87,6 +89,7 @@ const SignUp = () => {
                 <label htmlFor="Email" className="block text-sm font-medium text-gray-700"> Email </label>
 
                 <input
+                  required
                   type="email"
                   id="Email"
                   name="email"
@@ -100,6 +103,7 @@ const SignUp = () => {
                 <label htmlFor="Password" className="block text-sm font-medium text-gray-700"> Password </label>
 
                 <input
+                  required
                   type="password"
                   id="Password"
                   name="password"
@@ -112,6 +116,7 @@ const SignUp = () => {
               <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
                 <button
                   type="button"
+                  disabled={user.email === '' || user.password === ''}
                   className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
                   onClick={() => {
                     if (isRegistering) {

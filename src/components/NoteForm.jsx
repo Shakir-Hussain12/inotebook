@@ -43,6 +43,8 @@ const NoteForm = () => {
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                       defaultValue={title}
                       aria-label="Title Control"
+                      required
+                      minLength={5}
                       onChange={(e) => setTitle(e.target.value)}
                     />
                   </div>
@@ -51,7 +53,7 @@ const NoteForm = () => {
 
               <label htmlFor="Tag">
                 <span className="text-lg">Type</span>
-                <select id="Tag" name="Tag" aria-label="Tag Control" className="border rounded-lg ms-2 bg-slate-700 text-white" defaultValue={tag} onChange={(e) => setTag(e.target.value)}>
+                <select id="Tag" name="Tag" aria-label="Tag Control" className="border rounded-lg ms-2 bg-slate-700 text-white" required defaultValue={tag} onChange={(e) => setTag(e.target.value)}>
                   <option value="General">General</option>
                   <option value="Specific">Specific</option>
                 </select>
@@ -69,6 +71,8 @@ const NoteForm = () => {
                   rows={3}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   defaultValue={description}
+                  required
+                  minLength={10}
                   onChange={(e) => setDescription(e.target.value)}
                 />
               </div>
