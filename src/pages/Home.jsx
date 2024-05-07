@@ -38,11 +38,13 @@ const Home = () => {
 
         <span className="relative z-10 bg-white uppercase text-2xl">My Notes</span>
       </span>
-      {
+      <div className="grid md:grid-cols-2 gap-3 px-5">
+        {
           notes.map((note) => (
             <NoteItem key={note[id]} data={note} />
           ))
         }
+      </div>
     </>
   );
 };

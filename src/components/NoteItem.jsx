@@ -34,7 +34,7 @@ const NoteItem = ({
 
           <div>
             <select
-              className="rounded border border-indigo-500 bg-indigo-500 px-3 py-1.5 text-[10px] font-medium text-white"
+              className="rounded border border-indigo-500 bg-indigo-500 px-3 py-1.5 text-[10px] font-medium text-white text-wrap"
               disabled={!isEditable}
               onChange={(e) => setNoteTag(e.target.value)}
               defaultValue={tag}
@@ -43,7 +43,7 @@ const NoteItem = ({
               <option value="Specific">Specific</option>
             </select>
 
-            <h3 className="mt-4 text-lg font-medium sm:text-xl">
+            <h3 className="mt-4 text-lg font-medium sm:text-xl text-wrap">
               <input
                 type="text"
                 className="bg-white"
@@ -55,7 +55,7 @@ const NoteItem = ({
             </h3>
 
             <textarea
-              className="text-sm text-gray-700 resize-none sm:min-w-99 min-h-36 mt-3 bg-white"
+              className="text-sm text-gray-700 resize-none min-w-full min-h-36 mt-3 bg-white text-wrap"
               disabled={!isEditable}
               onChange={(e) => setNoteDescription(e.target.value)}
               defaultValue={noteDescription}
