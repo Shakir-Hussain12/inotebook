@@ -1,13 +1,17 @@
 import React, { useContext } from 'react';
+import { useDispatch } from 'react-redux';
 import Navbar from '../components/Navbar';
 import noteContext from '../context/notes/noteContext';
 import NoteForm from '../components/NoteForm';
 import NoteItem from '../components/NoteItem';
+import { fetchUser, fetchUsers } from '../Redux/Auth/authActions';
 
 const Home = () => {
   const context = useContext(noteContext);
   const { notes, activeForm, setactiveForm } = context;
   const id = '_id';
+  const dispatch = useDispatch();
+
   return (
     <>
       <Navbar />
@@ -44,6 +48,13 @@ const Home = () => {
             <NoteItem key={note[id]} data={note} />
           ))
         }
+      </div>
+
+      <div className="flex flex-col mt-5">
+        <button onClick={() => dispatch(fetchUsers())} type="button">GetUsers</button>
+        <button type="button" onClick={() => dispatch(fetchUser())}>GetUser</button>
+        <button type="button">CheckLogin</button>
+        <button type="button">CheckRegister</button>
       </div>
     </>
   );

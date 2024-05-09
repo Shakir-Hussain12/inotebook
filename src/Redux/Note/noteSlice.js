@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import fetchNotes from './noteActions';
+// import fetchNotes from './noteActions';
 
 const initialState = {
   notes: [],
@@ -9,22 +9,22 @@ const initialState = {
 export const noteSlice = createSlice({
   name: 'note',
   initialState,
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchNotes.pending, (state) => (
-        {
-          ...state,
-          isLoading: true,
-        }
-      ))
-      .addCase(fetchNotes.fulfilled, (state, { payload }) => (
-        {
-          ...state,
-          isLoading: false,
-          notes: payload,
-        }
-      ));
-  },
+  // extraReducers: (builder) => {
+  //   builder
+  //     .addCase(fetchNotes.pending, (state) => (
+  //       {
+  //         ...state,
+  //         isLoading: true,
+  //       }
+  //     ))
+  //     .addCase(fetchNotes.fulfilled, (state, { payload }) => (
+  //       {
+  //         ...state,
+  //         isLoading: false,
+  //         notes: payload,
+  //       }
+  //     ));
+  // },
 });
 
 export default noteSlice.reducer;
