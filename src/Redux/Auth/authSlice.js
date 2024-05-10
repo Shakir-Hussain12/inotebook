@@ -6,7 +6,7 @@ import {
 const initialState = {
   users: [],
   currentUser: {},
-  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYxZjc1YjQ4NTViZTFjMDUzMmYyMDQ5In0sImlhdCI6MTcxMzM1NDE3Mn0.IfT__HK34JmuOm10KYN6TBqCIFWjd-C4TRm7J3GNT50',
+  token: '',
   isLoading: false,
   isLoggedIn: false,
 };
@@ -16,9 +16,10 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      state.user = {};
+      state.currentUser = {};
       state.token = '';
       state.isLoggedIn = false;
+      state.isLoading = false;
     },
   },
   extraReducers: (builder) => {
@@ -33,21 +34,23 @@ export const authSlice = createSlice({
         keys.map((key) => state.users.push(payload[key]));
         return state;
       })
-      .addCase(fetchUsers.rejected, ({ error }) => {
-        console.log(`Users found : ${error.message}`);
+      .addCase(registerUser.pending, (state) => {
+        state.isLoading = true;
       })
-      .addCase(registerUser.fulfilled, ({ payload }) => {
-        console.log(`User registered: ${payload}`);
+      .addCase(registerUser.fulfilled, (state) => {
+        state.isLoading = false;
       })
-      .addCase(registerUser.rejected, ({ error }) => {
-        console.log(`User registered: ${error.message}`);
+      .addCase(registerUser.rejected, (state, { error }) => ({ ...state, error: error.message }))
+      .addCase(loginUser.pending, (state) => {
+        state.isLoading = true;
       })
-      .addCase(loginUser.fulfilled, ({ payload }) => {
-        console.log(`User logged in: ${payload}`);
-      })
-      .addCase(loginUser.rejected, ({ error }) => {
-        console.log(`User logged in: ${error.message}`);
-      });
+      .addCase(loginUser.fulfilled, (state, { payload }) => ({
+        ...state,
+        isLoading: false,
+        isLoggedIn: true,
+        token: payload.token,
+      }))
+      .addCase(loginUser.rejected, (state, { error }) => ({ ...state, error: error.message }));
   },
 });
 
