@@ -5,6 +5,9 @@ import noteContext from '../context/notes/noteContext';
 import NoteForm from '../components/NoteForm';
 import NoteItem from '../components/NoteItem';
 import { fetchUser, fetchUsers, loginUser } from '../Redux/Auth/authActions';
+import {
+  addNote, deleteNote, fetchNotes, updateNote,
+} from '../Redux/Note/noteActions';
 
 const Home = () => {
   const context = useContext(noteContext);
@@ -58,11 +61,17 @@ const Home = () => {
       </div>
 
       <div className="flex flex-col mt-5">
-        <button onClick={() => dispatch()} type="button">GetNotes</button>
-        <button type="button" onClick={() => dispatch()}>AddNote</button>
-        <button type="button" onClick={() => dispatch()}>UpdateNote</button>
-        <button type="button" onClick={() => dispatch()}>deleteNote</button>
-        <button type="button">CheckRegister</button>
+        <button onClick={() => dispatch(fetchNotes())} type="button">GetNotes</button>
+        <button type="button" onClick={() => dispatch(addNote({ tag: 'General', title: 'Checking this tag', description: 'This is the check note description' }))}>AddNote</button>
+        <button
+          type="button"
+          onClick={() => dispatch(updateNote({
+            tag: 'General', title: 'Updated this(1)', description: 'Syke, it is updated now', _id: '663e74383791208e93e00395',
+          }))}
+        >
+          UpdateNote
+        </button>
+        <button type="button" onClick={() => dispatch(deleteNote('663e74383791208e93e00395'))}>deleteNote</button>
       </div>
     </>
   );
