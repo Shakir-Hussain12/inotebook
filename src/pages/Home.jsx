@@ -56,6 +56,14 @@ const Home = () => {
         <button type="button" onClick={() => dispatch(loginUser({ email: 'yehya1@gmail.com', password: '123456' }))}>CheckLogin</button>
         <button type="button">CheckRegister</button>
       </div>
+
+      <div className="flex flex-col mt-5">
+        <button onClick={() => dispatch()} type="button">GetNotes</button>
+        <button type="button" onClick={() => dispatch()}>AddNote</button>
+        <button type="button" onClick={() => dispatch()}>UpdateNote</button>
+        <button type="button" onClick={() => dispatch()}>deleteNote</button>
+        <button type="button">CheckRegister</button>
+      </div>
     </>
   );
 };

@@ -27,29 +27,37 @@ export const authSlice = createSlice({
       .addCase(fetchUser.fulfilled, (state, { payload }) => (
         { ...state, currentUser: payload }
       ))
+
       .addCase(fetchUser.rejected, (state, { error }) => ({ ...state, error: error.message }))
+
       .addCase(fetchUsers.fulfilled, (state, action) => {
         const { payload } = action;
         const keys = Object.keys(payload);
         keys.map((key) => state.users.push(payload[key]));
         return state;
       })
-      .addCase(registerUser.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(registerUser.fulfilled, (state) => {
-        state.isLoading = false;
-      })
+
+      .addCase(registerUser.pending, (state) => (
+        { ...state, isLoading: true }
+      ))
+
+      .addCase(registerUser.fulfilled, (state) => (
+        { ...state, isLoading: false }
+      ))
+
       .addCase(registerUser.rejected, (state, { error }) => ({ ...state, error: error.message }))
-      .addCase(loginUser.pending, (state) => {
-        state.isLoading = true;
-      })
+
+      .addCase(loginUser.pending, (state) => (
+        { ...state, isLoading: true }
+      ))
+
       .addCase(loginUser.fulfilled, (state, { payload }) => ({
         ...state,
         isLoading: false,
         isLoggedIn: true,
         token: payload.token,
       }))
+
       .addCase(loginUser.rejected, (state, { error }) => ({ ...state, error: error.message }));
   },
 });
