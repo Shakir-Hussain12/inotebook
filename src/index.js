@@ -4,11 +4,13 @@ import './index.css';
 import { Provider } from 'react-redux';
 import App from './App';
 import store from './Redux/store';
+import withRequireLogin from './requireLogin';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const WrappedApp = withRequireLogin(App);
 root.render(
   <Provider store={store}>
-    <App />
+    <WrappedApp />
   </Provider>,
 );
 

@@ -20,9 +20,9 @@ const AuthState = ({ children }) => {
 
     try {
       const res = await axios.post('http://localhost:5000/api/auth/createuser', newUser);
-      console.log(res.data);
+      return res.status(200).json({ message: 'User Registered' });
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
 
@@ -34,9 +34,10 @@ const AuthState = ({ children }) => {
 
     try {
       const res = await axios.post('http://localhost:5000/api/auth/login', newUser);
-      console.log(res.data);
+      window.location.href = '/';
+      return res.data;
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
 
