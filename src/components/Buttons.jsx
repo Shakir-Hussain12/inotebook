@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import noteContext from '../context/notes/noteContext';
+import { deleteNote } from '../Redux/Note/noteActions';
 
 const config = {
   headers: {
@@ -16,6 +18,7 @@ const Buttons = ({
   }, inputRef,
 }) => {
   const context = useContext(noteContext);
+  const dispatch = useDispatch();
 
   const handleEdit = () => {
     context.setIsEditable(!context.isEditable);
@@ -24,15 +27,15 @@ const Buttons = ({
     inputRef.current.focus();
   };
 
-  const handleDelete = async () => {
-    try {
-      await axios.delete(`http://localhost:5000/api/notes/${_id}`, config);
-      window.location.reload();
-      return 1;
-    } catch (error) {
-      return error;
-    }
-  };
+  // const handleDelete = async () => {
+  //   try {
+  //     await axios.delete(`http://localhost:5000/api/notes/${_id}`, config);
+  //     window.location.reload();
+  //     return 1;
+  //   } catch (error) {
+  //     return error;
+  //   }
+  // };
 
   const handleSave = async () => {
     const payload = {
@@ -79,7 +82,7 @@ const Buttons = ({
       <button
         type="button"
         className="inline-flex items-center gap-2 rounded-md bg-white px-4 py-2 text-sm text-red-500 shadow-sm focus:relative"
-        onClick={() => handleDelete()}
+        onClick={() => dispatch(deleteNote(_id))}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

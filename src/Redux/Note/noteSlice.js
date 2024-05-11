@@ -32,7 +32,7 @@ export const noteSlice = createSlice({
 
       .addCase(deleteNote.fulfilled, (state, { payload }) => {
         const id = '_id';
-        state.notes.filter((note) => note[id] !== payload);
+        state.notes = state.notes.filter((note) => note[id] !== payload);
         state.isLoading = false;
       })
 

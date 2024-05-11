@@ -40,10 +40,10 @@ export const updateNote = createAsyncThunk('api/UpdateNote',
   });
 
 export const deleteNote = createAsyncThunk('api/DeleteNote',
-  async ({ _id }) => {
+  async (_id) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/api/notes/${_id}`, config);
-      return response.data;
+      await axios.delete(`http://localhost:5000/api/notes/${_id}`, config);
+      return _id;
     } catch (error) {
       return error;
     }
