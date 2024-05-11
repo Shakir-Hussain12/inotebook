@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 
+const isLoggedIn = JSON.parse(localStorage.getItem('status')) || false;
 const withRequireLogin = (WrappedComponent) => {
   const CheckLogin = (props) => {
-    const { isLoggedIn } = useSelector((state) => state.auth);
     useEffect(() => {
       const currentPath = window.location.pathname;
       if (!isLoggedIn && currentPath !== '/SignUp') {

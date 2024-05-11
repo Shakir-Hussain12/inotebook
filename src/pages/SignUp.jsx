@@ -1,13 +1,19 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useContext } from 'react';
-import noteContext from '../context/notes/noteContext';
-import authContext from '../context/notes/authContext';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { loginUser, registerUser } from '../Redux/Auth/authActions';
 
 const SignUp = () => {
-  const { isRegistering, setIsRegistering } = useContext(noteContext);
-  const {
-    user, setUser, Login, Register,
-  } = useContext(authContext);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [user, setUser] = useState({
+    first_name: '',
+    last_name: '',
+    email: '',
+    password: '',
+  });
 
   return (
     <section className="bg-white">
@@ -120,9 +126,11 @@ const SignUp = () => {
                   className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
                   onClick={() => {
                     if (isRegistering) {
-                      Register(user);
+                      dispatch(registerUser(user));
+                      setIsRegistering(false);
                     } else {
-                      Login(user);
+                      dispatch(loginUser(user));
+                      navigate('/');
                     }
                     setIsRegistering(false);
                   }}

@@ -8,7 +8,6 @@ const initialState = {
   currentUser: {},
   token: '',
   isLoading: false,
-  isLoggedIn: false,
 };
 
 export const authSlice = createSlice({
@@ -18,8 +17,8 @@ export const authSlice = createSlice({
     logout: (state) => {
       state.currentUser = {};
       state.token = '';
-      state.isLoggedIn = false;
       state.isLoading = false;
+      localStorage.setItem('status', JSON.stringify(false));
     },
   },
   extraReducers: (builder) => {
@@ -51,15 +50,20 @@ export const authSlice = createSlice({
         { ...state, isLoading: true }
       ))
 
-      .addCase(loginUser.fulfilled, (state, { payload }) => ({
-        ...state,
-        isLoading: false,
-        isLoggedIn: true,
-        token: payload.token,
-      }))
+      .addCase(loginUser.fulfilled, (state, { payload }) => {
+        localStorage.setItem('status', JSON.stringify(true));
+        return {
+          ...state,
+          isLoading: false,
+          token: payload.token,
+        };
+      })
 
-      .addCase(loginUser.rejected, (state, { error }) => ({ ...state, error: error.message }));
+      .addCase(loginUser.rejected, (state, { error }) => (
+        { ...state, error: error.message }
+      ));
   },
 });
 
+export const { logout } = authSlice.actions;
 export default authSlice.reducer;
