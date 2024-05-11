@@ -64,7 +64,7 @@ const NoteItem = ({
         </div>
         <Buttons
           data={{
-            noteTag, noteTitle, noteDescription, _id,
+            tag: noteTag, title: noteTitle, description: noteDescription, _id,
           }}
           inputRef={inputRef}
         />

@@ -7,7 +7,6 @@ const NoteState = ({ children }) => {
   const [notes, setNotes] = useState([]);
   const [activeForm, setactiveForm] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
-  const [isRegistering, setIsRegistering] = useState(false);
 
   const config = {
     headers: {
@@ -37,8 +36,6 @@ const NoteState = ({ children }) => {
       setactiveForm,
       isEditable,
       setIsEditable,
-      isRegistering,
-      setIsRegistering,
     }}
     >
       {children}

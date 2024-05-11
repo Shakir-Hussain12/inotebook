@@ -1,20 +1,12 @@
 import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import noteContext from '../context/notes/noteContext';
-import { deleteNote } from '../Redux/Note/noteActions';
-
-const config = {
-  headers: {
-    'Content-Type': 'application/json',
-    'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYxZjc1YjQ4NTViZTFjMDUzMmYyMDQ5In0sImlhdCI6MTcxNDI5MzA4NX0.nbxQqBMvi_5jbM6u5ntoiG5vKVG64sqOZz8tumuZbLo',
-  },
-};
+import { deleteNote, updateNote } from '../Redux/Note/noteActions';
 
 const Buttons = ({
   data: {
-    _id, noteTag, noteTitle, noteDescription,
+    _id, tag, title, description,
   }, inputRef,
 }) => {
   const context = useContext(noteContext);
@@ -25,33 +17,6 @@ const Buttons = ({
     const newRef = { ...inputRef };
     newRef.current.disabled = false;
     inputRef.current.focus();
-  };
-
-  // const handleDelete = async () => {
-  //   try {
-  //     await axios.delete(`http://localhost:5000/api/notes/${_id}`, config);
-  //     window.location.reload();
-  //     return 1;
-  //   } catch (error) {
-  //     return error;
-  //   }
-  // };
-
-  const handleSave = async () => {
-    const payload = {
-      tag: noteTag,
-      title: noteTitle,
-      description: noteDescription,
-    };
-
-    try {
-      await axios.put(`http://localhost:5000/api/notes/${_id}`, payload, config);
-    } catch (error) {
-      console.log(error);
-    }
-
-    context.setIsEditable(false);
-    return 1;
   };
 
   return (
@@ -103,9 +68,11 @@ const Buttons = ({
       </button>
 
       <button
-        type="submit"
+        type="button"
         className={`inline-flex items-center gap-2 rounded-md bg-slate-800 text-green px-4 py-2 text-sm shadow-sm focus:relative ${context.isEditable ? 'block' : 'hidden'}`}
-        onClick={() => handleSave()}
+        onClick={() => dispatch(updateNote({
+          _id, tag, title, description,
+        }))}
       >
         Save
       </button>
@@ -115,9 +82,9 @@ const Buttons = ({
 
 Buttons.propTypes = {
   data: PropTypes.shape({
-    noteTag: PropTypes.string.isRequired,
-    noteTitle: PropTypes.string.isRequired,
-    noteDescription: PropTypes.string.isRequired,
+    tag: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
     _id: PropTypes.string.isRequired,
   }).isRequired,
   inputRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) }).isRequired,
