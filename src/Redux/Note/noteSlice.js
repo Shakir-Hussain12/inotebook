@@ -21,6 +21,9 @@ export const noteSlice = createSlice({
         return note;
       });
     },
+    resetNotes: (state) => {
+      state.notes = [];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -29,10 +32,17 @@ export const noteSlice = createSlice({
       ))
 
       .addCase(fetchNotes.fulfilled, (state, { payload }) => {
+        const newNotes = [];
         const keys = Object.keys(payload);
-        keys.map((key) => state.notes.push({ ...payload[key], isEditable: false }));
-        state.isLoading = false;
-        return state;
+        keys.map((key) => newNotes.push(
+          { ...payload[key], isEditable: false },
+        ));
+
+        return {
+          ...state,
+          notes: newNotes,
+          isLoading: false,
+        };
       })
 
       .addCase(addNote.fulfilled, (state, { payload }) => {
@@ -45,6 +55,8 @@ export const noteSlice = createSlice({
         const id = '_id';
         state.notes = state.notes.filter((note) => note[id] !== payload);
         state.isLoading = false;
+
+        return state;
       })
 
       .addCase(updateNote.fulfilled, (state, { payload }) => {
@@ -56,9 +68,11 @@ export const noteSlice = createSlice({
           return note;
         });
         state.isLoading = false;
+
+        return state;
       });
   },
 });
 
-export const { setIsEditable } = noteSlice.actions;
+export const { setIsEditable, resetNotes } = noteSlice.actions;
 export default noteSlice.reducer;

@@ -29,11 +29,16 @@ export const authSlice = createSlice({
 
       .addCase(fetchUser.rejected, (state, { error }) => ({ ...state, error: error.message }))
 
-      .addCase(fetchUsers.fulfilled, (state, action) => {
-        const { payload } = action;
+      .addCase(fetchUsers.fulfilled, (state, { payload }) => {
+        const newUsers = [];
         const keys = Object.keys(payload);
-        keys.map((key) => state.users.push(payload[key]));
-        return state;
+        keys.map((key) => newUsers.push(payload[key]));
+
+        return {
+          ...state,
+          users: newUsers,
+          isLoading: false,
+        };
       })
 
       .addCase(registerUser.pending, (state) => (
