@@ -1,19 +1,23 @@
-import React, { useContext } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useContext, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Navbar from '../components/Navbar';
 import noteContext from '../context/notes/noteContext';
 import NoteForm from '../components/NoteForm';
 import NoteItem from '../components/NoteItem';
 import { fetchUser, fetchUsers, loginUser } from '../Redux/Auth/authActions';
-import {
-  addNote, deleteNote, fetchNotes, updateNote,
-} from '../Redux/Note/noteActions';
+import { fetchNotes } from '../Redux/Note/noteActions';
 
 const Home = () => {
-  const context = useContext(noteContext);
-  const { notes, activeForm, setactiveForm } = context;
-  const id = '_id';
   const dispatch = useDispatch();
+  const context = useContext(noteContext);
+
+  useEffect(() => {
+    dispatch(fetchNotes());
+  }, []);
+
+  const { notes } = useSelector((state) => state.note);
+  const { activeForm, setactiveForm } = context;
+  const id = '_id';
 
   return (
     <>
@@ -57,21 +61,7 @@ const Home = () => {
         <button onClick={() => dispatch(fetchUsers())} type="button">GetUsers</button>
         <button type="button" onClick={() => dispatch(fetchUser())}>GetUser</button>
         <button type="button" onClick={() => dispatch(loginUser({ email: 'yehya1@gmail.com', password: '123456' }))}>CheckLogin</button>
-        <button type="button">CheckRegister</button>
-      </div>
-
-      <div className="flex flex-col mt-5">
         <button onClick={() => dispatch(fetchNotes())} type="button">GetNotes</button>
-        <button type="button" onClick={() => dispatch(addNote({ tag: 'General', title: 'Checking this tag', description: 'This is the check note description' }))}>AddNote</button>
-        <button
-          type="button"
-          onClick={() => dispatch(updateNote({
-            tag: 'General', title: 'Updated this(1)', description: 'Syke, it is updated now', _id: '663e74383791208e93e00395',
-          }))}
-        >
-          UpdateNote
-        </button>
-        <button type="button" onClick={() => dispatch(deleteNote('663e74383791208e93e00395'))}>deleteNote</button>
       </div>
     </>
   );
