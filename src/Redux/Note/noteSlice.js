@@ -11,6 +11,17 @@ const initialState = {
 export const noteSlice = createSlice({
   name: 'note',
   initialState,
+  reducers: {
+    setIsEditable: (state, { payload: { target } }) => {
+      const id = '_id';
+      state.notes.map((note) => {
+        if (note[id] === target) {
+          note.isEditable = !note.isEditable;
+        }
+        return note;
+      });
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchNotes.pending, (state) => (
@@ -49,4 +60,5 @@ export const noteSlice = createSlice({
   },
 });
 
+export const { setIsEditable } = noteSlice.actions;
 export default noteSlice.reducer;

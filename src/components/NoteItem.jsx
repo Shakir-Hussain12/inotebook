@@ -1,16 +1,18 @@
-import React, { useContext, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Buttons from './Buttons';
-import noteContext from '../context/notes/noteContext';
 
 const NoteItem = ({
   data: {
     _id, tag, title, description,
   },
 }) => {
+  const id = '_id';
   const inputRef = useRef(null);
-  const context = useContext(noteContext);
-  const { isEditable } = context;
+  const { notes } = useSelector((state) => state.note);
+  const { isEditable } = notes.find((note) => note[id] === _id) || false;
+
   const [noteTitle, setNoteTitle] = useState(title);
   const [noteDescription, setNoteDescription] = useState(description);
   const [noteTag, setNoteTag] = useState(tag);
@@ -67,6 +69,7 @@ const NoteItem = ({
             tag: noteTag, title: noteTitle, description: noteDescription, _id,
           }}
           inputRef={inputRef}
+          isEditable={isEditable}
         />
       </div>
     </article>
