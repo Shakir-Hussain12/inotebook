@@ -4,7 +4,6 @@ import Navbar from '../components/Navbar';
 import noteContext from '../context/notes/noteContext';
 import NoteForm from '../components/NoteForm';
 import NoteItem from '../components/NoteItem';
-import { fetchUser, fetchUsers, loginUser } from '../Redux/Auth/authActions';
 import { fetchNotes } from '../Redux/Note/noteActions';
 
 const Home = () => {
@@ -55,13 +54,6 @@ const Home = () => {
             <NoteItem key={note[id]} data={note} />
           ))
         }
-      </div>
-
-      <div className="flex flex-col mt-5">
-        <button onClick={() => dispatch(fetchUsers())} type="button">GetUsers</button>
-        <button type="button" onClick={() => dispatch(fetchUser())}>GetUser</button>
-        <button type="button" onClick={() => dispatch(loginUser({ email: 'yehya1@gmail.com', password: '123456' }))}>CheckLogin</button>
-        <button onClick={() => dispatch(fetchNotes())} type="button">GetNotes</button>
       </div>
     </>
   );
