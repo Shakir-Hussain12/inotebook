@@ -6,7 +6,6 @@ import NoteContext from './noteContext';
 const NoteState = ({ children }) => {
   const [notes, setNotes] = useState([]);
   const [activeForm, setactiveForm] = useState(false);
-  const [isEditable, setIsEditable] = useState(false);
 
   const config = {
     headers: {
@@ -34,8 +33,6 @@ const NoteState = ({ children }) => {
       setNotes,
       activeForm,
       setactiveForm,
-      isEditable,
-      setIsEditable,
     }}
     >
       {children}
