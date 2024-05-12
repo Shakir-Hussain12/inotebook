@@ -1,28 +1,15 @@
 import { useContext, useState } from 'react';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
 import noteContext from '../context/notes/noteContext';
-
-const config = {
-  headers: {
-    'Content-Type': 'application/json',
-    'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYxZjc1YjQ4NTViZTFjMDUzMmYyMDQ5In0sImlhdCI6MTcxNDI5MzA4NX0.nbxQqBMvi_5jbM6u5ntoiG5vKVG64sqOZz8tumuZbLo',
-  },
-};
+import { addNote } from '../Redux/Note/noteActions';
 
 const NoteForm = () => {
   const context = useContext(noteContext);
+  const dispatch = useDispatch();
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [tag, setTag] = useState('General');
-
-  const handleSave = async (data) => {
-    try {
-      await axios.post('http://localhost:5000/api/notes/', data, config);
-      window.location.reload();
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const { setactiveForm } = context;
   return (
@@ -87,7 +74,10 @@ const NoteForm = () => {
           <button
             type="button"
             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            onClick={() => handleSave({ title, description, tag })}
+            onClick={() => {
+              dispatch(addNote({ title, description, tag }));
+              setactiveForm(false);
+            }}
           >
             Save
           </button>

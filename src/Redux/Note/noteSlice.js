@@ -49,6 +49,8 @@ export const noteSlice = createSlice({
         const newNote = { ...payload.note, isEditable: false };
         state.notes.push(newNote);
         state.isLoading = false;
+
+        return state;
       })
 
       .addCase(deleteNote.fulfilled, (state, { payload }) => {
