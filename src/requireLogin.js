@@ -5,8 +5,8 @@ const withRequireLogin = (WrappedComponent) => {
   const CheckLogin = (props) => {
     useEffect(() => {
       const currentPath = window.location.pathname;
-      if (!isLoggedIn && currentPath !== '/SignUp') {
-        window.location.href = '/SignUp';
+      if (!isLoggedIn && currentPath !== '/auth') {
+        window.location.href = '/auth';
       }
     }, []);
 

@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginUser, registerUser } from '../Redux/Auth/authActions';
 
 const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { error } = useSelector((state) => state.auth) || false;
   const [isRegistering, setIsRegistering] = useState(false);
   const [user, setUser] = useState({
     first_name: '',
@@ -14,6 +15,14 @@ const SignUp = () => {
     email: '',
     password: '',
   });
+
+  useEffect(() => {
+    if (error) {
+      setIsRegistering(true);
+    } else {
+      setIsRegistering(false);
+    }
+  }, [error]);
 
   return (
     <section className="bg-white">
@@ -127,12 +136,10 @@ const SignUp = () => {
                   onClick={() => {
                     if (isRegistering) {
                       dispatch(registerUser(user));
-                      setIsRegistering(false);
                     } else {
                       dispatch(loginUser(user));
                       navigate('/');
                     }
-                    setIsRegistering(false);
                   }}
                 >
                   { isRegistering ? 'Register' : 'Login' }
