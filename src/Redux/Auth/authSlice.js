@@ -7,6 +7,7 @@ const initialState = {
   users: [],
   currentUser: {},
   token: '',
+  error: null,
   isLoading: false,
 };
 
@@ -24,10 +25,9 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchUser.fulfilled, (state, { payload }) => (
-        { ...state, currentUser: payload }
+        { ...state, currentUser: payload, error: null }
       ))
-
-      .addCase(fetchUser.rejected, (state, { error }) => ({ ...state, error: error.message }))
+      .addCase(fetchUser.rejected, (state, { payload }) => ({ ...state, error: payload }))
 
       .addCase(fetchUsers.fulfilled, (state, { payload }) => {
         const newUsers = [];
@@ -38,35 +38,32 @@ export const authSlice = createSlice({
           ...state,
           users: newUsers,
           isLoading: false,
+          error: null,
         };
       })
+      .addCase(fetchUsers.rejected, (state, { payload }) => ({ ...state, error: payload }))
 
       .addCase(registerUser.pending, (state) => (
-        { ...state, isLoading: true }
+        { ...state, isLoading: true, error: null }
       ))
-
       .addCase(registerUser.fulfilled, (state) => (
-        { ...state, isLoading: false }
+        { ...state, isLoading: false, error: null }
       ))
-
-      .addCase(registerUser.rejected, (state, { error }) => ({ ...state, error: error.message }))
+      .addCase(registerUser.rejected, (state, { payload }) => ({ ...state, error: payload }))
 
       .addCase(loginUser.pending, (state) => (
-        { ...state, isLoading: true }
+        { ...state, isLoading: true, error: null }
       ))
-
       .addCase(loginUser.fulfilled, (state, { payload }) => {
         localStorage.setItem('status', JSON.stringify(true));
         return {
           ...state,
           isLoading: false,
           token: payload.token,
+          error: null,
         };
       })
-
-      .addCase(loginUser.rejected, (state, { error }) => (
-        { ...state, error: error.message }
-      ));
+      .addCase(loginUser.rejected, (state, { payload }) => ({ ...state, error: payload }));
   },
 });
 
