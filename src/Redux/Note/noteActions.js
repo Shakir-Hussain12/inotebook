@@ -9,42 +9,42 @@ const config = {
 };
 
 export const fetchNotes = createAsyncThunk('api/FetchNotes',
-  async () => {
+  async ({ rejectWithValue }) => {
     try {
       const response = await axios.get('http://localhost:5000/api/notes', config);
       return response.data;
     } catch (error) {
-      return error;
+      return rejectWithValue(error.message);
     }
   });
 
 export const addNote = createAsyncThunk('api/AddNote',
-  async (note) => {
+  async (note, { rejectWithValue }) => {
     try {
       const response = await axios.post('http://localhost:5000/api/notes/', note, config);
       return response.data;
     } catch (error) {
-      return error;
+      return rejectWithValue(error.message);
     }
   });
 
 export const updateNote = createAsyncThunk('api/UpdateNote',
-  async (note) => {
+  async (note, { rejectWithValue }) => {
     const id = '_id';
     try {
       const response = await axios.put(`http://localhost:5000/api/notes/${note[id]}`, note, config);
       return response.data;
     } catch (error) {
-      return error;
+      return rejectWithValue(error.message);
     }
   });
 
 export const deleteNote = createAsyncThunk('api/DeleteNote',
-  async (_id) => {
+  async (_id, { rejectWithValue }) => {
     try {
       await axios.delete(`http://localhost:5000/api/notes/${_id}`, config);
       return _id;
     } catch (error) {
-      return error;
+      return rejectWithValue(error.message);
     }
   });

@@ -11,6 +11,7 @@ const initialState = {
 export const noteSlice = createSlice({
   name: 'note',
   initialState,
+  error: null,
   reducers: {
     setIsEditable: (state, { payload: { target } }) => {
       const id = '_id';
