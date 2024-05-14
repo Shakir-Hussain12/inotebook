@@ -47,7 +47,7 @@ router.delete('/:id', authorize, async (req, res) => {
     }
 
     await Note.deleteOne({ user: req.user?.id, _id: id });
-    return res.status(200).json({ msg: 'Note Deleted' ,note });
+    return res.status(200).json({ msg: 'Note Deleted', note });
   } catch (err) {
     return res.status(500).json({ Error: 'Internal Server Error' });
   }
@@ -62,7 +62,7 @@ router.put('/:id', authorize, async (req, res) => {
     if (!note) {
       return res.status(404).send('Note Not Found');
     }
-   
+
     await Note.findOneAndUpdate({ user: req.user?.id, _id: id }, req.body);
     note = await Note.findOne({ user: req.user?.id, _id: id });
     return res.status(200).json({ note });
