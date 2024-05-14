@@ -5,6 +5,7 @@ import {
 
 const initialState = {
   notes: [],
+  error: null,
   isLoading: false,
 };
 
@@ -31,7 +32,6 @@ export const noteSlice = createSlice({
       .addCase(fetchNotes.pending, (state) => (
         { ...state, isLoading: true }
       ))
-
       .addCase(fetchNotes.fulfilled, (state, { payload }) => {
         const newNotes = [];
         const keys = Object.keys(payload);
@@ -44,6 +44,10 @@ export const noteSlice = createSlice({
           notes: newNotes,
           isLoading: false,
         };
+      })
+      .addCase(fetchNotes.rejected, (state, { payload }) => {
+        console.log(payload);
+        return { ...state, isLoading: true, error: 'Hi there' };
       })
 
       .addCase(addNote.fulfilled, (state, { payload }) => {

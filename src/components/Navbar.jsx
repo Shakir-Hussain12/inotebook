@@ -111,7 +111,7 @@ const Navbar = () => {
 
                         <Menu.Item>
                           <NavLink
-                            to="/SignUp"
+                            to="/auth"
                             className={({ isActive }) => getClassName(isActive, 'big', 'two')}
                             onClick={() => { dispatch(logout()); }}
                           >

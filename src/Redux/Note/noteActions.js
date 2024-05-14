@@ -4,12 +4,12 @@ import axios from 'axios';
 const config = {
   headers: {
     'Content-Type': 'application/json',
-    'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYxZjc1YjQ4NTViZTFjMDUzMmYyMDQ5In0sImlhdCI6MTcxNDI5MzA4NX0.nbxQqBMvi_5jbM6u5ntoiG5vKVG64sqOZz8tumuZbLo',
+    'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYxZjc1YjQ4NTViZTFjMDUzMmYyMDQ5In0sImlhdCI6MTcxNTY4Njg2Mn0.N6ifrHpaYoKz0ghJuY8vsDmq5ZlbMFCa-RwudPk_RuM',
   },
 };
 
 export const fetchNotes = createAsyncThunk('api/FetchNotes',
-  async ({ rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get('http://localhost:5000/api/notes', config);
       return response.data;

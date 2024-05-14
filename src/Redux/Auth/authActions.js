@@ -8,7 +8,7 @@ const config = {
   },
 };
 
-export const fetchUsers = createAsyncThunk('auth/fetchUsers', async ({ rejectWithValue }) => {
+export const fetchUsers = createAsyncThunk('auth/fetchUsers', async (_, { rejectWithValue }) => {
   try {
     const response = await axios.get('http://localhost:5000/api/auth/');
     return response.data;
@@ -17,7 +17,7 @@ export const fetchUsers = createAsyncThunk('auth/fetchUsers', async ({ rejectWit
   }
 });
 
-export const fetchUser = createAsyncThunk('auth/fetchUser', async ({ rejectWithValue }) => {
+export const fetchUser = createAsyncThunk('auth/fetchUser', async (_, { rejectWithValue }) => {
   try {
     const response = await axios.post('http://localhost:5000/api/auth/getuser', {}, config);
     return response.data;
