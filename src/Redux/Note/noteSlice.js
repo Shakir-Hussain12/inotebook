@@ -45,10 +45,9 @@ export const noteSlice = createSlice({
           isLoading: false,
         };
       })
-      .addCase(fetchNotes.rejected, (state, { payload }) => {
-        console.log(payload);
-        return { ...state, isLoading: true, error: 'Hi there' };
-      })
+      .addCase(fetchNotes.rejected, (state, { payload }) => (
+        { ...state, isLoading: true, error: payload }
+      ))
 
       .addCase(addNote.fulfilled, (state, { payload }) => {
         const newNote = { ...payload.note, isEditable: false };
