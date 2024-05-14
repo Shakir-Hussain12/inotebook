@@ -73,14 +73,7 @@ router.post('/createuser', [
         password: secPass,
       });
 
-      const payload = {
-        user: {
-          id: user.id,
-        },
-      };
-
-      const token = jwt.sign(payload, process.env.SECRET_KEY);
-      return res.json({ response: 'User created successfully!', token });
+      return res.json({ response: 'User created successfully!'});
     }
     return res.json({ response: "Couldn't create user", error: 'Email already in use' });
   } catch (err) {
