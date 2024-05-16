@@ -46,7 +46,10 @@ router.post('/login', [
     };
 
     const token = jwt.sign(payload, process.env.SECRET_KEY);
-    return res.json({ token });
+
+    res.cookie('token', token , { httpOnly: true, domain: 'localhost', path: '/'});
+    res.json({ token });
+    return res;
   } catch (err) {
     return res.status(500).send('Internal Server Error');
   }
