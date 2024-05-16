@@ -20,6 +20,7 @@ export const authSlice = createSlice({
       state.token = '';
       state.isLoading = false;
       localStorage.setItem('status', JSON.stringify(false));
+      localStorage.setItem('auth', JSON.stringify(false));
     },
   },
   extraReducers: (builder) => {
@@ -56,10 +57,11 @@ export const authSlice = createSlice({
       ))
       .addCase(loginUser.fulfilled, (state, { payload }) => {
         localStorage.setItem('status', JSON.stringify(true));
+        localStorage.setItem('auth', JSON.stringify(true));
         return {
           ...state,
           isLoading: false,
-          token: payload.token,
+          token: payload,
           error: null,
         };
       })
