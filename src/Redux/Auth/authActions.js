@@ -56,9 +56,14 @@ export const loginUser = createAsyncThunk('auth/loginUser', async (user, { rejec
   };
 
   try {
-    const response = await axios.post('http://localhost:5000/api/auth/login', newUser);
+    const response = await axios.post('http://localhost:5000/api/auth/login', newUser, { withCredentials: true });
     return response.data;
   } catch (error) {
     return rejectWithValue(error.message);
   }
+});
+
+export const authenticateUser = createAsyncThunk('auth/authenticateUser', async (token) => {
+  const check = jwt.verify(token, user.password, )
+  
 });
