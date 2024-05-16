@@ -9,10 +9,21 @@ import { fetchNotes } from '../Redux/Note/noteActions';
 const Home = () => {
   const dispatch = useDispatch();
   const context = useContext(noteContext);
+  const isLoggedIn = JSON.parse(localStorage.getItem('status')) || false;
+  const isAuthenticated = JSON.parse(localStorage.getItem('auth')) || false;
 
   useEffect(() => {
     dispatch(fetchNotes());
-  }, []);
+    if (isLoggedIn) {
+      alert('Login Successfull');
+    }
+
+    setTimeout(() => {
+      if (isAuthenticated) {
+        alert('Authenticated');
+      }
+    }, 300);
+  }, [isLoggedIn, isAuthenticated]);
 
   const { notes } = useSelector((state) => state.note);
   const { activeForm, setactiveForm } = context;
