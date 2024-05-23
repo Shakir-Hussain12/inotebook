@@ -137,8 +137,8 @@ const SignUp = () => {
                     if (isRegistering) {
                       dispatch(registerUser(user));
                     } else {
-                      dispatch(loginUser(user));
-                      navigate('/');
+                      dispatch(loginUser(user))
+                        .then(() => navigate('/'));
                     }
                   }}
                 >

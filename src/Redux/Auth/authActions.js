@@ -62,8 +62,3 @@ export const loginUser = createAsyncThunk('auth/loginUser', async (user, { rejec
     return rejectWithValue(error.message);
   }
 });
-
-export const authenticateUser = createAsyncThunk('auth/authenticateUser', async (token) => {
-  const check = jwt.verify(token, user.password, )
-  
-});
