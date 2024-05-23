@@ -17,7 +17,7 @@ const SignUp = () => {
   });
 
   useEffect(() => {
-    if (error) {
+    if (error && error === 'User already exists') {
       setIsRegistering(true);
     } else {
       setIsRegistering(false);
