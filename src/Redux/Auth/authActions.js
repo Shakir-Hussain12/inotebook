@@ -1,12 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-
-const config = {
-  headers: {
-    'Content-Type': 'application/json',
-    'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYxZjc1YjQ4NTViZTFjMDUzMmYyMDQ5In0sImlhdCI6MTcxMzM1NDE3Mn0.IfT__HK34JmuOm10KYN6TBqCIFWjd-C4TRm7J3GNT50',
-  },
-};
+import api from '../../../AxiosInterceptor';
 
 export const fetchUsers = createAsyncThunk('auth/fetchUsers', async (_, { rejectWithValue }) => {
   try {
@@ -19,7 +13,7 @@ export const fetchUsers = createAsyncThunk('auth/fetchUsers', async (_, { reject
 
 export const fetchUser = createAsyncThunk('auth/fetchUser', async (_, { rejectWithValue }) => {
   try {
-    const response = await axios.post('http://localhost:5000/api/auth/getuser', {}, config);
+    const response = await api.post('http://localhost:5000/api/auth/getuser', {});
     return response.data;
   } catch (error) {
     return rejectWithValue(error.message);
@@ -42,7 +36,7 @@ export const registerUser = createAsyncThunk('auth/registerUser', async (user, {
   }
 
   try {
-    const response = await axios.post('http://localhost:5000/api/auth/createuser', newUser, config);
+    const response = await axios.post('http://localhost:5000/api/auth/createuser', newUser);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.message);
