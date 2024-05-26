@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import api from '../../../AxiosInterceptor';
+import api from '../../AxiosInterceptor';
 
 export const fetchNotes = createAsyncThunk('api/FetchNotes',
   async (_, { rejectWithValue }) => {

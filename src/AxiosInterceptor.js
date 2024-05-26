@@ -7,6 +7,8 @@ const api = axios.create({
 
 api.interceptors.request.use((config) => {
   const token = Cookies.get('token');
+  console.log('Inside');
+  console.log(token);
   const newConfig = { ...config };
 
   if (token) {

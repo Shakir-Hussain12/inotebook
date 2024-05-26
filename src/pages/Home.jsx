@@ -12,10 +12,10 @@ const Home = () => {
   const isLoggedIn = JSON.parse(localStorage.getItem('status')) || false;
 
   useEffect(() => {
-    dispatch(fetchNotes());
     if (isLoggedIn) {
       alert('Login Successfull');
     }
+    dispatch(fetchNotes());
   }, [isLoggedIn]);
 
   const { notes } = useSelector((state) => state.note);
