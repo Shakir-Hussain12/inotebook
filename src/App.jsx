@@ -13,22 +13,16 @@ function App() {
       <NoteState>
         <BrowserRouter>
           <Routes>
-            <Route
-              path="/"
-              element={(
-                <PrivateRoute>
-                  <Home />
-                </PrivateRoute>
-            )}
-            />
-            <Route
-              path="/about"
-              element={(
-                <PrivateRoute>
-                  <About />
-                </PrivateRoute>
-            )}
-            />
+            <Route element={<PrivateRoute />}>
+              <Route
+                path="/"
+                element={(<Home />)}
+              />
+              <Route
+                path="/about"
+                element={(<About />)}
+              />
+            </Route>
             <Route path="/auth" element={<Authenticate />} />
           </Routes>
         </BrowserRouter>
