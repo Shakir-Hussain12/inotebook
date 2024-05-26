@@ -7,6 +7,7 @@ const initialState = {
   users: [],
   currentUser: {},
   token: '',
+  refreshToken: '',
   error: null,
   isLoading: false,
 };
@@ -16,10 +17,15 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      state.currentUser = {};
-      state.token = '';
-      state.isLoading = false;
       localStorage.setItem('status', JSON.stringify(false));
+      return {
+        ...state,
+        currentUser: {},
+        token: '',
+        refreshToken: '',
+        error: null,
+        isLoading: false,
+      };
     },
   },
   extraReducers: (builder) => {
@@ -59,7 +65,8 @@ export const authSlice = createSlice({
         return {
           ...state,
           isLoading: false,
-          token: payload,
+          token: payload.accessToken,
+          refreshToken: payload.refreshToken,
           error: null,
         };
       })

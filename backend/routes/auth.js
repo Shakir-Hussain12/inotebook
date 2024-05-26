@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator');
 const User = require('../models/User');
+const Token = require('../models/Token');
 
 const router = express.Router();
 const authorize = require('../middleware/authorize');
@@ -45,10 +46,13 @@ router.post('/login', [
       },
     };
 
-    const token = jwt.sign(payload, process.env.SECRET_KEY);
+    const accessToken = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1h' });
+    const refreshToken = jwt.sign(payload, process.env.REFRESH_SECRET_KEY);
 
-    res.cookie('token', token , { httpOnly: true, domain: 'localhost', path: '/'});
-    res.json({ token });
+    await Token.create({ token: refreshToken, userId: user.id });
+
+    res.cookie('token', accessToken , { httpOnly: true, domain: 'localhost', path: '/'});
+    res.json({ accessToken, refreshToken });
     return res;
   } catch (err) {
     return res.status(500).send('Internal Server Error');
