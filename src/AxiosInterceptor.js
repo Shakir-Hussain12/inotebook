@@ -6,12 +6,19 @@ const api = axios.create({
 
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
-    if (error.response && error.response.status === 401) {
-      // Handle 401 errors (unauthorized)
-      console.error('Unauthorized access - redirecting to login');
-      // You can perform a redirect to login page here or any other action
+  async (error) => {
+    if (error.response && error.response.status === 400) {
+      try {
+        const response = await axios.get('http://localhost:5000/api/auth/refresh', { withCredentials: true });
+        if (response.status === 200) {
+          return api(error.config);
+        }
+      } catch (error) {
+        localStorage.setItem('status', JSON.stringify(false));
+        window.location.href = '/auth';
+      }
     }
+
     return Promise.reject(error);
   },
 );
