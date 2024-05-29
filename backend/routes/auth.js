@@ -50,7 +50,15 @@ router.post('/login', [
     const accessToken = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1h' });
     const refreshToken = jwt.sign(payload, process.env.REFRESH_SECRET_KEY);
 
-    await Token.create({ token: refreshToken, userId: user.id });
+    const refToken = await Token.findOne({ userId: user.id });
+    if (!refToken) {
+      await Token.create({ userId: user.id, token: refreshToken }); 
+    }
+
+    if(refToken) {
+      await Token.findOneAndUpdate({ userId: user.id }, { token: refreshToken });
+    }
+
     res.cookie('token', accessToken , { httpOnly: true, domain: 'localhost', path: '/'});
     res.cookie('refreshToken', refreshToken, { httpOnly: true, domain: 'localhost', path: '/' });
     res.json({ accessToken, refreshToken });
