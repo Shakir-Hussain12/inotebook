@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useDispatch } from 'react-redux';
@@ -27,6 +27,7 @@ const getClassName = (isActive, size, type) => classNames(
 
 const Navbar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   return (
     <>
       <Disclosure as="nav" className="bg-gray-800 mb-1">
@@ -111,9 +112,8 @@ const Navbar = () => {
 
                         <Menu.Item>
                           <NavLink
-                            to="/auth"
                             className={({ isActive }) => getClassName(isActive, 'big', 'two')}
-                            onClick={() => { dispatch(logoutUser()); }}
+                            onClick={() => { dispatch(logoutUser()).then(() => navigate('/auth')); }}
                           >
                             Sign out
                           </NavLink>

@@ -17,6 +17,11 @@ const SignUp = () => {
   });
 
   useEffect(() => {
+    const isLoggedIn = JSON.parse(localStorage.getItem('status')) || false;
+    if (isLoggedIn) {
+      navigate('/');
+    }
+
     if (error && error === 'User already exists') {
       setIsRegistering(true);
     } else {
