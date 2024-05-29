@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import api from '../../AxiosInterceptor';
 
 export const fetchUsers = createAsyncThunk('auth/fetchUsers', async (_, { rejectWithValue }) => {
   try {
@@ -13,7 +12,7 @@ export const fetchUsers = createAsyncThunk('auth/fetchUsers', async (_, { reject
 
 export const fetchUser = createAsyncThunk('auth/fetchUser', async (_, { rejectWithValue }) => {
   try {
-    const response = await api.post('http://localhost:5000/api/auth/getuser', {});
+    const response = await axios.post('http://localhost:5000/api/auth/getuser', {});
     return response.data;
   } catch (error) {
     return rejectWithValue(error.message);

@@ -8,6 +8,7 @@ const Token = require('../models/Token');
 
 const router = express.Router();
 const authorize = require('../middleware/authorize');
+const refreshAuthorize = require('../middleware/refreshAuthorize');
 
 // base route
 router.get('/', async (req, res) => {
@@ -50,8 +51,8 @@ router.post('/login', [
     const refreshToken = jwt.sign(payload, process.env.REFRESH_SECRET_KEY);
 
     await Token.create({ token: refreshToken, userId: user.id });
-
     res.cookie('token', accessToken , { httpOnly: true, domain: 'localhost', path: '/'});
+    res.cookie('refreshToken', refreshToken, { httpOnly: true, domain: 'localhost', path: '/' });
     res.json({ accessToken, refreshToken });
     return res;
   } catch (err) {
@@ -104,4 +105,23 @@ router.post('/getuser', authorize, async (req, res) => {
   }
 });
 
+router.get('/refresh', refreshAuthorize, async (req, res) => {
+  try {
+    const accessToken = jwt.sign({ user: req.user }, process.env.SECRET_KEY, { expiresIn: '1h' });
+    res.cookie('token', accessToken, { httpOnly: true, domain: 'localhost', path: '/' });
+    return res.json({ accessToken });
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
+});
+
+router.get('/logout', authorize, async (req, res) => {
+  try {
+    await Token.deleteOne({ userId: req.user.id });
+    res.clearCookie('token');
+    res.clearCookie('refreshToken');
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
+});
 module.exports = router;
