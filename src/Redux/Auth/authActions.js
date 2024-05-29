@@ -55,3 +55,12 @@ export const loginUser = createAsyncThunk('auth/loginUser', async (user, { rejec
     return rejectWithValue(error.message);
   }
 });
+
+export const logoutUser = createAsyncThunk('auth/logoutUser', async (_, { rejectWithValue }) => {
+  try {
+    const response = await axios.get('http://localhost:5000/api/auth/logout', { withCredentials: true });
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.message);
+  }
+});
