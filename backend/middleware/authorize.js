@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 // extracting user from token
 const authorize = (req, res, next) => {
-  const authHeader = req.cookies['token'] ;
+  const authHeader = req.cookies.token;
   if (!authHeader) {
     return res.status(401).send('Unauthorized Access');
   }

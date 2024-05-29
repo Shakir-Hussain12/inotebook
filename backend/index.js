@@ -10,7 +10,7 @@ db();
 
 app.use((req, res, next) => {
   const allowedOrigins = ['http://127.0.0.1:3000', 'http://localhost:3000']; // Add other origins as needed
-  const origin = req.headers.origin;
+  const { origin } = req.headers;
   if (allowedOrigins.includes(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }

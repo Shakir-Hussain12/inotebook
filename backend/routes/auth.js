@@ -52,14 +52,14 @@ router.post('/login', [
 
     const refToken = await Token.findOne({ userId: user.id });
     if (!refToken) {
-      await Token.create({ userId: user.id, token: refreshToken }); 
+      await Token.create({ userId: user.id, token: refreshToken });
     }
 
-    if(refToken) {
+    if (refToken) {
       await Token.findOneAndUpdate({ userId: user.id }, { token: refreshToken });
     }
 
-    res.cookie('token', accessToken , { httpOnly: true, domain: 'localhost', path: '/'});
+    res.cookie('token', accessToken, { httpOnly: true, domain: 'localhost', path: '/' });
     res.cookie('refreshToken', refreshToken, { httpOnly: true, domain: 'localhost', path: '/' });
     res.json({ accessToken, refreshToken });
     return res;
@@ -89,7 +89,7 @@ router.post('/createuser', [
         password: secPass,
       });
 
-      return res.json({ response: 'User created successfully!'});
+      return res.json({ response: 'User created successfully!' });
     }
     return res.json({ response: "Couldn't create user", error: 'Email already in use' });
   } catch (err) {

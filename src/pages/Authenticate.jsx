@@ -27,6 +27,7 @@ const SignUp = () => {
     } else {
       setIsRegistering(false);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error]);
 
   return (
