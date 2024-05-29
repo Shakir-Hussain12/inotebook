@@ -26,11 +26,11 @@ router.post('/', [
   }
 
   try {
-    await Note.create({
+    const note = await Note.create({
       user: req.user.id,
       ...req.body,
     });
-    return res.status(200).send('Note Created');
+    return res.status(200).json({ msg: 'Note Created', note });
   } catch (err) {
     return res.status(500).Json({ Error: 'Internal Server Error' });
   }
@@ -47,7 +47,7 @@ router.delete('/:id', authorize, async (req, res) => {
     }
 
     await Note.deleteOne({ user: req.user?.id, _id: id });
-    return res.status(200).send('Note Deleted');
+    return res.status(200).json({ msg: 'Note Deleted', note });
   } catch (err) {
     return res.status(500).json({ Error: 'Internal Server Error' });
   }
@@ -58,13 +58,14 @@ router.put('/:id', authorize, async (req, res) => {
   try {
     const { id } = req.params;
 
-    const note = await Note.findOne({ user: req.user?.id, _id: id });
+    let note = await Note.findOne({ user: req.user?.id, _id: id });
     if (!note) {
       return res.status(404).send('Note Not Found');
     }
 
     await Note.findOneAndUpdate({ user: req.user?.id, _id: id }, req.body);
-    return res.status(200).send('Note Updated');
+    note = await Note.findOne({ user: req.user?.id, _id: id });
+    return res.status(200).json({ note });
   } catch (err) {
     return res.status(500).json({ Error: 'Internal Server Error' });
   }

@@ -1,14 +1,14 @@
 const jwt = require('jsonwebtoken');
 
 // extracting user from token
-const authorize = (req, res, next) => {
-  const authHeader = req.cookies.token;
+const refreshAuthorize = (req, res, next) => {
+  const authHeader = req.cookies.refreshToken;
   if (!authHeader) {
     return res.status(401).send('Unauthorized Access');
   }
 
   try {
-    const payload = jwt.verify(authHeader, process.env.SECRET_KEY);
+    const payload = jwt.verify(authHeader, process.env.REFRESH_SECRET_KEY);
     req.user = payload.user;
     next();
     return 1;
@@ -17,4 +17,4 @@ const authorize = (req, res, next) => {
   }
 };
 
-module.exports = authorize;
+module.exports = refreshAuthorize;
