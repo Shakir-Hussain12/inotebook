@@ -120,6 +120,7 @@ router.get('/logout', authorize, async (req, res) => {
     await Token.deleteOne({ userId: req.user.id });
     res.clearCookie('token');
     res.clearCookie('refreshToken');
+    return res.json({ response: 'Logged out successfully' });
   } catch (error) {
     return res.status(500).json({ error });
   }

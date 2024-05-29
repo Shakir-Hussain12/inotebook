@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useDispatch } from 'react-redux';
-import { logout } from '../Redux/Auth/authSlice';
+import { logoutUser } from '../Redux/Auth/authActions';
 
 const myLinks = [
   { to: '/', name: 'Home' },
@@ -113,7 +113,7 @@ const Navbar = () => {
                           <NavLink
                             to="/auth"
                             className={({ isActive }) => getClassName(isActive, 'big', 'two')}
-                            onClick={() => { dispatch(logout()); }}
+                            onClick={() => { dispatch(logoutUser()); }}
                           >
                             Sign out
                           </NavLink>
