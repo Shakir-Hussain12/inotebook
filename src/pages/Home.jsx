@@ -7,6 +7,7 @@ import noteContext from '../context/notes/noteContext';
 import NoteForm from '../components/NoteForm';
 import NoteItem from '../components/NoteItem';
 import { fetchNotes } from '../Redux/Note/noteActions';
+import { fetchUser } from '../Redux/Auth/authActions';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -14,10 +15,8 @@ const Home = () => {
   const isLoggedIn = JSON.parse(localStorage.getItem('status')) || false;
 
   useEffect(() => {
-    if (isLoggedIn) {
-      alert('Login Successfull');
-    }
     dispatch(fetchNotes());
+    dispatch(fetchUser());
   }, [isLoggedIn]);
 
   const { notes } = useSelector((state) => state.note);
