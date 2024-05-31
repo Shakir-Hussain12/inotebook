@@ -2,6 +2,7 @@
 /* eslint-disable no-alert */
 import React, { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Loaderpage from '../components/LoaderPage';
 import Navbar from '../components/Navbar';
 import noteContext from '../context/notes/noteContext';
 import NoteForm from '../components/NoteForm';
@@ -19,15 +20,17 @@ const Home = () => {
     dispatch(fetchUser());
   }, [isLoggedIn]);
 
-  const { notes } = useSelector((state) => state.note);
+  const { notes, isLoading: isLoadingNotes } = useSelector((state) => state.note);
+  const { isLoading: isLoadingUser } = useSelector((state) => state.auth);
   const { activeForm, setactiveForm } = context;
   const id = '_id';
 
   return (
-    <>
-      <Navbar />
+    isLoadingUser ? <Loaderpage /> : (
+      <>
+        <Navbar />
 
-      {
+        {
         !activeForm ? (
           <button
             type="button"
@@ -42,25 +45,30 @@ const Home = () => {
         ) : null
       }
 
-      {
+        {
         activeForm ? <NoteForm /> : null
       }
 
-      <span className="relative flex justify-center mt-3 mb-3 mxs:mt-16">
-        <div
-          className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-transparent bg-gradient-to-r from-transparent via-gray-500 to-transparent opacity-75"
-        />
+        <span className="relative flex justify-center mt-3 mb-3 mxs:mt-16">
+          <div
+            className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-transparent bg-gradient-to-r from-transparent via-gray-500 to-transparent opacity-75"
+          />
 
-        <span className="relative z-10 bg-white uppercase text-2xl">My Notes</span>
-      </span>
-      <div className="grid md:grid-cols-2 gap-3 px-5">
+          <span className="relative z-10 bg-white uppercase text-2xl">My Notes</span>
+        </span>
         {
-          notes.map((note) => (
-            <NoteItem key={note[id]} data={note} />
-          ))
-        }
-      </div>
-    </>
+        isLoadingNotes ? <Loaderpage /> : (
+          <div className="grid md:grid-cols-2 gap-3 px-5">
+            {
+              notes.map((note) => (
+                <NoteItem key={note[id]} data={note} />
+              ))
+            }
+          </div>
+        )
+      }
+      </>
+    )
   );
 };
 
