@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { useDispatch } from 'react-redux';
 import { logoutUser } from '../Redux/Auth/authActions';
 
 const myLinks = [
@@ -26,7 +25,6 @@ const getClassName = (isActive, size, type) => classNames(
 );
 
 const Navbar = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   return (
     <>
@@ -113,7 +111,7 @@ const Navbar = () => {
                         <Menu.Item>
                           <NavLink
                             className={({ isActive }) => getClassName(isActive, 'big', 'two')}
-                            onClick={() => { dispatch(logoutUser()).then(() => navigate('/auth')); }}
+                            onClick={() => { logoutUser().then(() => navigate('/auth')); }}
                           >
                             Sign out
                           </NavLink>

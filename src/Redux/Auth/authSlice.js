@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   fetchUsers, fetchUser, registerUser, loginUser,
-  logoutUser,
 } from './authActions';
 
 const initialState = {
@@ -63,17 +62,6 @@ export const authSlice = createSlice({
         localStorage.setItem('status', JSON.stringify(false));
         return {
           ...state, error: payload,
-        };
-      })
-      .addCase(logoutUser.fulfilled, (state) => {
-        localStorage.setItem('status', JSON.stringify(false));
-        return {
-          ...state,
-          currentUser: {},
-          token: '',
-          refreshToken: '',
-          error: null,
-          isLoading: false,
         };
       });
   },

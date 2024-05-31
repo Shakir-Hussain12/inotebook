@@ -123,12 +123,11 @@ router.get('/refresh', refreshAuthorize, async (req, res) => {
   }
 });
 
-router.get('/logout', authorize, async (req, res) => {
+router.get('/logout', async (req, res) => {
   try {
-    await Token.deleteOne({ userId: req.user.id });
     res.clearCookie('token');
     res.clearCookie('refreshToken');
-    return res.json({ response: 'Logged out successfully' });
+    return res.status(200).json({ response: 'Logged out successfully' });
   } catch (error) {
     return res.status(500).json({ error });
   }
