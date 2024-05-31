@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { logoutUser } from '../Redux/Auth/authActions';
+import logoutUser from '../Redux/Auth/logoutUser';
 
 const myLinks = [
   { to: '/', name: 'Home' },
