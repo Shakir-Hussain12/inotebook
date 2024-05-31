@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import api from '../../AxiosInterceptor';
 
 export const fetchUsers = createAsyncThunk('auth/fetchUsers', async (_, { rejectWithValue }) => {
   try {
@@ -12,7 +13,7 @@ export const fetchUsers = createAsyncThunk('auth/fetchUsers', async (_, { reject
 
 export const fetchUser = createAsyncThunk('auth/fetchUser', async (_, { rejectWithValue }) => {
   try {
-    const response = await axios.post('http://localhost:5000/api/auth/getuser', {});
+    const response = await api.post('http://localhost:5000/api/auth/getuser', {}, { withCredentials: true });
     return response.data;
   } catch (error) {
     return rejectWithValue(error.message);
@@ -55,14 +56,3 @@ export const loginUser = createAsyncThunk('auth/loginUser', async (user, { rejec
     return rejectWithValue(error.message);
   }
 });
-
-export const logoutUser = async () => {
-  try {
-    localStorage.setItem('status', JSON.stringify(false));
-    const res = await axios.get('http://localhost:5000/api/auth/logout');
-    window.location.href = '/auth';
-    return res;
-  } catch (error) {
-    return error;
-  }
-};
