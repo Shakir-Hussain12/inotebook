@@ -56,11 +56,13 @@ export const loginUser = createAsyncThunk('auth/loginUser', async (user, { rejec
   }
 });
 
-export const logoutUser = createAsyncThunk('auth/logoutUser', async (_, { rejectWithValue }) => {
+export const logoutUser = async () => {
   try {
-    const response = await axios.get('http://localhost:5000/api/auth/logout', { withCredentials: true });
-    return response.data;
+    localStorage.setItem('status', JSON.stringify(false));
+    const res = await axios.get('http://localhost:5000/api/auth/logout');
+    window.location.href = '/auth';
+    return res;
   } catch (error) {
-    return rejectWithValue(error.message);
+    return error;
   }
-});
+};
