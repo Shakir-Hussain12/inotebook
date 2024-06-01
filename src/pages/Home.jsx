@@ -14,14 +14,14 @@ const Home = () => {
   const dispatch = useDispatch();
   const context = useContext(noteContext);
   const isLoggedIn = JSON.parse(localStorage.getItem('status')) || false;
+  const { notes, isLoading: isLoadingNotes } = useSelector((state) => state.note);
+  const { isLoading: isLoadingUser } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(fetchNotes());
     dispatch(fetchUser());
   }, [isLoggedIn]);
 
-  const { notes, isLoading: isLoadingNotes } = useSelector((state) => state.note);
-  const { isLoading: isLoadingUser } = useSelector((state) => state.auth);
   const { activeForm, setactiveForm } = context;
   const id = '_id';
 
