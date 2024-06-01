@@ -27,18 +27,18 @@ router.post('/login', [
 ], async (req, res) => {
   const err = validationResult(req);
   if (!err.isEmpty()) {
-    return res.status(400).json({ err: err.array() });
+    return res.status(400).json({ err: err.array()[0].msg });
   }
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ error: 'No such user exists' });
+      return res.status(400).json({ err: 'No such user exists' });
     }
 
     const passCompare = await bcrypt.compare(password, user.password);
     if (!passCompare) {
-      return res.status(400).json({ error: "Password doesn't match" });
+      return res.status(400).json({ err: "Password doesn't match" });
     }
 
     const payload = {
@@ -64,19 +64,19 @@ router.post('/login', [
     res.json({ accessToken, refreshToken });
     return res;
   } catch (err) {
-    return res.status(500).send('Internal Server Error');
+    return res.status(500).json({ err: 'Internal Server Error' });
   }
 });
 
 // sign-up route
 router.post('/createuser', [
-  body('name', 'Invalid Name').isLength({ min: 3 }),
+  body('name', 'Name too short').isLength({ min: 3 }),
   body('email', 'Invalid Email').isEmail(),
-  body('password', 'Invalid Password').isLength({ min: 6 }),
+  body('password', 'Password too short').isLength({ min: 6 }),
 ], async (req, res) => {
   const err = validationResult(req);
   if (!err.isEmpty()) {
-    return res.status(400).json({ err: err.array() });
+    return res.status(400).json({ err: err.array()[0].msg });
   }
   try {
     let user = await User.findOne({ email: req.body.email });
@@ -93,7 +93,7 @@ router.post('/createuser', [
     }
     return res.json({ response: "Couldn't create user", error: 'Email already in use' });
   } catch (err) {
-    return res.status(500).send('Internal Server Error');
+    return res.status(500).json({ err: 'Internal Server Error' });
   }
 });
 
@@ -104,12 +104,12 @@ router.post('/getuser', authorize, async (req, res) => {
     const user = await User.findById(userid).select('-password');
 
     if (!user) {
-      return res.status(400).json({ error: 'No such user exists' });
+      return res.status(400).json({ err: 'No such user exists' });
     }
 
     return res.json(user);
-  } catch (error) {
-    return res.status(500).json({ error });
+  } catch (err) {
+    return res.status(500).json({ err });
   }
 });
 
@@ -128,8 +128,8 @@ router.get('/logout', async (req, res) => {
     res.clearCookie('token');
     res.clearCookie('refreshToken');
     return res.status(200).json({ response: 'Logged out successfully' });
-  } catch (error) {
-    return res.status(500).json({ error });
+  } catch (err) {
+    return res.status(500).json({ err });
   }
 });
 module.exports = router;
