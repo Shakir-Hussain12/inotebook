@@ -7,7 +7,7 @@ export const fetchUsers = createAsyncThunk('auth/fetchUsers', async (_, { reject
     const response = await axios.get('http://localhost:5000/api/auth/');
     return response.data;
   } catch (error) {
-    return rejectWithValue(error.message);
+    return rejectWithValue(error.response.data.err);
   }
 });
 
@@ -16,7 +16,7 @@ export const fetchUser = createAsyncThunk('auth/fetchUser', async (_, { rejectWi
     const response = await api.post('http://localhost:5000/api/auth/getuser', {}, { withCredentials: true });
     return response.data;
   } catch (error) {
-    return rejectWithValue(error.message);
+    return rejectWithValue(error.response.data.err);
   }
 });
 
@@ -39,7 +39,7 @@ export const registerUser = createAsyncThunk('auth/registerUser', async (user, {
     const response = await axios.post('http://localhost:5000/api/auth/createuser', newUser);
     return response.data;
   } catch (error) {
-    return rejectWithValue(error.message);
+    return rejectWithValue(error.response.data.err);
   }
 });
 
@@ -53,6 +53,6 @@ export const loginUser = createAsyncThunk('auth/loginUser', async (user, { rejec
     const response = await axios.post('http://localhost:5000/api/auth/login', newUser, { withCredentials: true });
     return response.data;
   } catch (error) {
-    return rejectWithValue(error.message);
+    return rejectWithValue(error.response.data.err);
   }
 });

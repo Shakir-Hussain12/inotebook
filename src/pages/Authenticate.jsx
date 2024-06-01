@@ -3,12 +3,14 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginUser, registerUser } from '../Redux/Auth/authActions';
+import Popup from '../components/popup';
 
 const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { error } = useSelector((state) => state.auth) || false;
   const [isRegistering, setIsRegistering] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const [user, setUser] = useState({
     first_name: '',
     last_name: '',
@@ -18,10 +20,12 @@ const SignUp = () => {
 
   useEffect(() => {
     const isLoggedIn = JSON.parse(localStorage.getItem('status')) || false;
+    if (error) {
+      setShowPopup(true);
+    }
     if (isLoggedIn) {
       navigate('/');
     }
-
     if (error && error === 'User already exists') {
       setIsRegistering(true);
     } else {
@@ -32,6 +36,7 @@ const SignUp = () => {
 
   return (
     <section className="bg-white">
+      {showPopup && <Popup error={error} />}
       <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
         <aside className="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6">
           <img
@@ -141,7 +146,8 @@ const SignUp = () => {
                   className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
                   onClick={() => {
                     if (isRegistering) {
-                      dispatch(registerUser(user));
+                      dispatch(registerUser(user))
+                        .then(() => navigate('/'));
                     } else {
                       dispatch(loginUser(user))
                         .then(() => navigate('/'));
