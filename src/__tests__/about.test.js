@@ -1,22 +1,15 @@
 import { render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import store from '../Redux/store';
-import NoteState from '../context/notes/noteState';
-import Home from '../pages/Home';
+import About from '../pages/About';
 
-describe('Home Page', () => {
-  test('renders Home page', () => {
+describe('About Page', () => {
+  test('renders About page', () => {
     render(
-      <Provider store={store}>
-        <NoteState>
-          <BrowserRouter>
-            <Home />
-          </BrowserRouter>
-        </NoteState>
-      </Provider>,
+      <BrowserRouter>
+        <About />
+      </BrowserRouter>,
     );
-    const linkElement = screen.getByText(/My Notes/i);
-    expect(linkElement).toBeInTheDocument();
+    const headerElement = screen.getByText(/About Page/i);
+    expect(headerElement).toBeInTheDocument();
   });
 });

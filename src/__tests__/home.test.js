@@ -16,7 +16,7 @@ describe('Home Page', () => {
         </NoteState>
       </Provider>,
     );
-    const linkElement = screen.getByText(/My Notes/i);
-    expect(linkElement).toBeInTheDocument();
+    const spanElement = screen.getByText(/My Notes/i);
+    expect(spanElement).toBeInTheDocument();
   });
 });

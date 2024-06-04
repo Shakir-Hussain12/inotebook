@@ -1,22 +1,22 @@
 import { render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import store from '../Redux/store';
+import { Provider } from 'react-redux';
 import NoteState from '../context/notes/noteState';
-import Home from '../pages/Home';
+import store from '../Redux/store';
+import Authenticate from '../pages/Authenticate';
 
-describe('Home Page', () => {
-  test('renders Home page', () => {
+describe('Authenticate Page', () => {
+  test('renders Auth page', () => {
     render(
       <Provider store={store}>
-        <NoteState>
-          <BrowserRouter>
-            <Home />
-          </BrowserRouter>
-        </NoteState>
+        <BrowserRouter>
+          <NoteState>
+            <Authenticate />
+          </NoteState>
+        </BrowserRouter>
       </Provider>,
     );
-    const linkElement = screen.getByText(/My Notes/i);
-    expect(linkElement).toBeInTheDocument();
+    const buttonElement = screen.getByText(/Login/i);
+    expect(buttonElement).toBeInTheDocument();
   });
 });
