@@ -141,6 +141,7 @@ const SignUp = () => {
 
               <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
                 <button
+                  name="submitButton"
                   type="button"
                   disabled={user.email === '' || user.password === ''}
                   className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
@@ -162,6 +163,7 @@ const SignUp = () => {
                   {' '}
                   have an account?
                   <button
+                    name="toggleButton"
                     type="button"
                     className="text-gray-700 underline ms-1"
                     onClick={() => {

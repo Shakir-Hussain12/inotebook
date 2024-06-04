@@ -68,10 +68,16 @@ const NoteForm = () => {
         </div>
 
         <div className="flex items-center justify-end gap-x-6 border-b border-gray-900/10 pb-3">
-          <button type="button" className="text-sm font-semibold leading-6 text-gray-900" onClick={() => setactiveForm(false)}>
+          <button
+            name="cancelButton"
+            type="button"
+            className="text-sm font-semibold leading-6 text-gray-900"
+            onClick={() => setactiveForm(false)}
+          >
             Cancel
           </button>
           <button
+            name="saveFormButton"
             type="button"
             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             onClick={() => {

@@ -20,6 +20,7 @@ const Buttons = ({
   return (
     <div className="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1 gap-x-4">
       <button
+        name="editButton"
         type="button"
         className={`inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm text-blue-500 hover:text-gray-700 focus:relative ${isEditable ? 'hidden' : 'block'}`}
         onClick={() => handleEdit()}
@@ -43,6 +44,7 @@ const Buttons = ({
       </button>
 
       <button
+        name="deleteButton"
         type="button"
         className="inline-flex items-center gap-2 rounded-md bg-white px-4 py-2 text-sm text-red-500 shadow-sm focus:relative"
         onClick={() => dispatch(deleteNote(_id))}
@@ -67,6 +69,7 @@ const Buttons = ({
       </button>
 
       <button
+        name="saveButton"
         type="button"
         className={`inline-flex items-center gap-2 rounded-md bg-slate-800 text-green px-4 py-2 text-sm shadow-sm focus:relative ${isEditable ? 'block' : 'hidden'}`}
         onClick={() => {
