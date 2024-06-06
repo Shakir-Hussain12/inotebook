@@ -34,20 +34,6 @@ describe('Authenticate Page', () => {
     expect(spanElement).toBeInTheDocument();
   });
 
-  // it('contains a login form', () => {
-  //   render(
-  //     <Provider store={store}>
-  //       <BrowserRouter>
-  //         <NoteState>
-  //           <Authenticate />
-  //         </NoteState>
-  //       </BrowserRouter>
-  //     </Provider>,
-  //   );
-  //   const formElement = screen.getByRole('form');
-  //   expect(formElement).toBeInTheDocument();
-  // });
-
   it('form contains 2 input fields if logging in', () => {
     render(
       <Provider store={store}>
@@ -111,5 +97,25 @@ describe('Authenticate Page', () => {
     );
     const buttonElement = screen.getByRole(('button'), { name: /register/i });
     expect(buttonElement).toBeInTheDocument();
+  });
+
+  it('has register button and link to login if registering', async () => {
+    render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <NoteState>
+            <Authenticate />
+          </NoteState>
+        </BrowserRouter>
+      </Provider>,
+    );
+    await act(async () => {
+      const toggleButton = screen.getByRole('button', { name: /register/i });
+      fireEvent.click(toggleButton);
+    });
+
+    const buttonElement = screen.getByRole(('button'), { name: /register/i });
+    const loginLink = screen.getByRole('button', { name: /login/i });
+    expect(buttonElement && loginLink).toBeInTheDocument();
   });
 });
