@@ -2,7 +2,7 @@
 /* eslint-disable no-alert */
 import React, { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Loaderpage from '../components/LoaderPage';
+import Loaderpage from '../components/loaderPage';
 import Navbar from '../components/Navbar';
 import noteContext from '../context/notes/noteContext';
 import NoteForm from '../components/NoteForm';
@@ -47,8 +47,8 @@ const Home = () => {
       }
 
         {
-        activeForm ? <NoteForm /> : null
-      }
+          activeForm ? <NoteForm /> : null
+        }
 
         <span className="relative flex justify-center mt-3 mb-3 mxs:mt-16">
           <div
@@ -58,16 +58,16 @@ const Home = () => {
           <span className="relative z-10 bg-white uppercase text-2xl">My Notes</span>
         </span>
         {
-        isLoadingNotes ? <Loaderpage /> : (
-          <div className="grid md:grid-cols-2 gap-3 px-5">
-            {
-              notes.map((note) => (
-                <NoteItem key={note[id]} data={note} />
-              ))
-            }
-          </div>
-        )
-      }
+          isLoadingNotes ? <Loaderpage /> : (
+            <div className="grid md:grid-cols-2 gap-3 px-5">
+              {
+                notes.map((note) => (
+                  <NoteItem key={note[id]} data={note} />
+                ))
+              }
+            </div>
+          )
+        }
       </>
     )
   );

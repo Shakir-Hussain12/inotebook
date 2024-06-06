@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import About from '../pages/About';
 
 describe('About Page', () => {
-  test('renders About page', () => {
+  it('renders About page', () => {
     render(
       <BrowserRouter>
         <About />
