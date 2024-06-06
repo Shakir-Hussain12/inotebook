@@ -13,7 +13,7 @@ const NoteForm = () => {
 
   const { setactiveForm } = context;
   return (
-    <form>
+    <form data-testid="noteForm">
       <div className="space-y-12 px-8 mb-6">
         <div className="mt-10 grid grid-cols-1 gap-y-8 sm:grid-cols-4">
           <div className="sm:col-span-full">
