@@ -23,6 +23,7 @@ const NoteForm = () => {
                 <div className="mt-2">
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                     <input
+                      data-testid="title"
                       type="text"
                       name="title"
                       id="title"
@@ -42,7 +43,8 @@ const NoteForm = () => {
                 <span className="text-lg">Type</span>
                 <select id="Tag" name="Tag" aria-label="Tag Control" className="border rounded-lg ms-2 bg-slate-700 text-white" required defaultValue={tag} onChange={(e) => setTag(e.target.value)}>
                   <option value="General">General</option>
-                  <option value="Specific">Specific</option>
+                  <option value="Work">Work</option>
+                  <option value="Personal">Personal</option>
                 </select>
               </label>
             </div>
@@ -53,6 +55,7 @@ const NoteForm = () => {
               Description
               <div className="mt-2">
                 <textarea
+                  data-testid="description"
                   id="description"
                   name="description"
                   rows={3}

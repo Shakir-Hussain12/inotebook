@@ -84,6 +84,7 @@ const SignUp = () => {
 
                     <input
                       required
+                      data-testid="first-name"
                       type="text"
                       id="FirstName"
                       name="first_name"
@@ -100,6 +101,7 @@ const SignUp = () => {
 
                     <input
                       required
+                      data-testid="last-name"
                       type="text"
                       id="LastName"
                       name="last_name"
@@ -116,6 +118,7 @@ const SignUp = () => {
 
                 <input
                   required
+                  data-testid="email"
                   type="email"
                   id="Email"
                   name="email"
@@ -130,6 +133,7 @@ const SignUp = () => {
 
                 <input
                   required
+                  data-testid="password"
                   type="password"
                   id="Password"
                   name="password"
