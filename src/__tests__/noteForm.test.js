@@ -1,10 +1,12 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import store from '../Redux/store';
 import NoteState from '../context/notes/noteState';
 import NoteForm from '../components/NoteForm';
+import { toBeOneOf } from 'jest-extended';
 
+expect.extend({ toBeOneOf });
 describe('Noteform Components', () => {
   beforeEach(() => {
     render(
@@ -32,9 +34,27 @@ describe('Noteform Components', () => {
     expect(inputFields).toHaveLength(2);
   });
 
+  it('checks if valid changes are made to title', () => {
+    const titleInput = screen.getByTestId('title');
+    fireEvent.change(titleInput, { target: { value: 'note title' } });
+    expect(titleInput.value).toEqual('note title');
+  });
+
+  it('checks if valid changes are made to description', () => {
+    const descriptionInput = screen.getByTestId('description');
+    fireEvent.change(descriptionInput, { target: { value: 'note description' } });
+    expect(descriptionInput.value).toEqual('note description');
+  });
+
   it('has a select element', () => {
     const selectElement = screen.getByRole('combobox');
     expect(selectElement).toBeInTheDocument();
+  });
+
+  it('check for valid value in select element', () => {
+    const selectElement = screen.getByRole('combobox');
+    fireEvent.change(selectElement, { target: { value: 'Work' } });
+    expect(selectElement.value).toBeOneOf(['Personal', 'General', 'Work']);
   });
 
   it('has a Save Button', () => {
