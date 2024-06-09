@@ -35,43 +35,47 @@ describe('Authenticate Page', () => {
     expect(spanElement).toBeInTheDocument();
   });
 
-  it('form contains 2 input fields if logging in', () => {
-    const emailField = screen.getByText(/Email/i);
-    const passwordField = screen.getByText(/Password/i);
-    expect(emailField && passwordField).toBeInTheDocument();
-  });
-
-  it('form contains 4 fields if registering', async () => {
-    const passwordField = screen.getByText(/Password/i);
-
-    await act(async () => {
-      const toggleButton = screen.getByRole('button', { name: /register/i });
-      fireEvent.click(toggleButton);
+  describe('Login Tests', () => {
+    it('form contains 2 input fields', () => {
+      const emailField = screen.getByText(/Email/i);
+      const passwordField = screen.getByText(/Password/i);
+      expect(emailField && passwordField).toBeInTheDocument();
     });
 
-    const inputField = screen.getAllByRole('textbox');
-    expect(inputField.length).toBe(3);
-    expect(passwordField).toBeInTheDocument();
-  });
-
-  it('contains a login button', () => {
-    const buttonElement = screen.getByText(/Login/i);
-    expect(buttonElement).toBeInTheDocument();
-  });
-
-  it('has button to registration', () => {
-    const buttonElement = screen.getByRole(('button'), { name: /register/i });
-    expect(buttonElement).toBeInTheDocument();
-  });
-
-  it('has register button and link to login if registering', async () => {
-    await act(async () => {
-      const toggleButton = screen.getByRole('button', { name: /register/i });
-      fireEvent.click(toggleButton);
+    it('contains a login button', () => {
+      const buttonElement = screen.getByText(/Login/i);
+      expect(buttonElement).toBeInTheDocument();
     });
 
-    const buttonElement = screen.getByRole(('button'), { name: /register/i });
-    const loginLink = screen.getByRole('button', { name: /login/i });
-    expect(buttonElement && loginLink).toBeInTheDocument();
+    it('has link to registration', () => {
+      const buttonElement = screen.getByRole(('button'), { name: /register/i });
+      expect(buttonElement).toBeInTheDocument();
+    });
+  });
+
+  describe('Registration Tests', () => {
+    it('form contains 4 fields', async () => {
+      const passwordField = screen.getByText(/Password/i);
+
+      await act(async () => {
+        const toggleButton = screen.getByRole('button', { name: /register/i });
+        fireEvent.click(toggleButton);
+      });
+
+      const inputField = screen.getAllByRole('textbox');
+      expect(inputField.length).toBe(3);
+      expect(passwordField).toBeInTheDocument();
+    });
+
+    it('has register button and link to login', async () => {
+      await act(async () => {
+        const toggleButton = screen.getByRole('button', { name: /register/i });
+        fireEvent.click(toggleButton);
+      });
+
+      const buttonElement = screen.getByRole(('button'), { name: /register/i });
+      const loginLink = screen.getByRole('button', { name: /login/i });
+      expect(buttonElement && loginLink).toBeInTheDocument();
+    });
   });
 });
