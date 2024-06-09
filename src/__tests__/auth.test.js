@@ -51,16 +51,34 @@ describe('Authenticate Page', () => {
       const buttonElement = screen.getByRole(('button'), { name: /register/i });
       expect(buttonElement).toBeInTheDocument();
     });
+
+    it('checks if valid changes are made to email', () => {
+      const emailField = screen.getByTestId('email');
+      fireEvent.change(emailField, { target: { value: 'shakir@gmail.com' } });
+      expect(emailField.value).toEqual('shakir@gmail.com');
+    });
+
+    it('checks if valid changes are made to password', () => {
+      const passwordField = screen.getByTestId('password');
+      fireEvent.change(passwordField, { target: { value: 'password' } });
+      expect(passwordField.value).toEqual('password');
+    });
   });
 
   describe('Registration Tests', () => {
-    it('form contains 4 fields', async () => {
-      const passwordField = screen.getByText(/Password/i);
-
+    beforeEach(async () => {
       await act(async () => {
         const toggleButton = screen.getByRole('button', { name: /register/i });
         fireEvent.click(toggleButton);
       });
+    });
+
+    afterEach(() => {
+      cleanup();
+    });
+
+    it('form contains 4 fields', async () => {
+      const passwordField = screen.getByText(/Password/i);
 
       const inputField = screen.getAllByRole('textbox');
       expect(inputField.length).toBe(3);
@@ -68,14 +86,33 @@ describe('Authenticate Page', () => {
     });
 
     it('has register button and link to login', async () => {
-      await act(async () => {
-        const toggleButton = screen.getByRole('button', { name: /register/i });
-        fireEvent.click(toggleButton);
-      });
-
       const buttonElement = screen.getByRole(('button'), { name: /register/i });
       const loginLink = screen.getByRole('button', { name: /login/i });
       expect(buttonElement && loginLink).toBeInTheDocument();
+    });
+
+    it('checks if valid changes are made to first name', () => {
+      const nameField = screen.getByTestId('first-name');
+      fireEvent.change(nameField, { target: { value: 'Shakir' } });
+      expect(nameField.value).toEqual('Shakir');
+    });
+
+    it('checks if valid changes are made to last name', () => {
+      const nameField = screen.getByTestId('last-name');
+      fireEvent.change(nameField, { target: { value: 'Hussain' } });
+      expect(nameField.value).toEqual('Hussain');
+    });
+
+    it('checks if valid changes are made to email', () => {
+      const emailField = screen.getByTestId('email');
+      fireEvent.change(emailField, { target: { value: 'shakir@gmail.com' } });
+      expect(emailField.value).toEqual('shakir@gmail.com');
+    });
+
+    it('checks if valid changes are made to password', () => {
+      const passwordField = screen.getByTestId('password');
+      fireEvent.change(passwordField, { target: { value: 'password' } });
+      expect(passwordField.value).toEqual('password');
     });
   });
 });
