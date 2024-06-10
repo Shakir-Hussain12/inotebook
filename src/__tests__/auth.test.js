@@ -1,5 +1,5 @@
 import {
-  render, screen, act, fireEvent,
+  render, screen, fireEvent,
   cleanup,
 } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
@@ -67,10 +67,8 @@ describe('Authenticate Page', () => {
 
   describe('Registration Tests', () => {
     beforeEach(async () => {
-      await act(async () => {
-        const toggleButton = screen.getByRole('button', { name: /register/i });
-        fireEvent.click(toggleButton);
-      });
+      const toggleButton = screen.getByRole('button', { name: /register/i });
+      fireEvent.click(toggleButton);
     });
 
     afterEach(() => {
@@ -80,25 +78,25 @@ describe('Authenticate Page', () => {
     it('form contains 4 fields', async () => {
       const passwordField = screen.getByText(/Password/i);
 
-      const inputField = screen.getAllByRole('textbox');
+      const inputField = await screen.findAllByRole('textbox');
       expect(inputField.length).toBe(3);
       expect(passwordField).toBeInTheDocument();
     });
 
     it('has register button and link to login', async () => {
-      const buttonElement = screen.getByRole(('button'), { name: /register/i });
-      const loginLink = screen.getByRole('button', { name: /login/i });
+      const buttonElement = await screen.findByRole(('button'), { name: /register/i });
+      const loginLink = await screen.findByRole('button', { name: /login/i });
       expect(buttonElement && loginLink).toBeInTheDocument();
     });
 
-    it('checks if valid changes are made to first name', () => {
-      const nameField = screen.getByTestId('first-name');
+    it('checks if valid changes are made to first name', async () => {
+      const nameField = await screen.findByTestId('first-name');
       fireEvent.change(nameField, { target: { value: 'Shakir' } });
       expect(nameField.value).toEqual('Shakir');
     });
 
-    it('checks if valid changes are made to last name', () => {
-      const nameField = screen.getByTestId('last-name');
+    it('checks if valid changes are made to last name', async () => {
+      const nameField = await screen.findByTestId('last-name');
       fireEvent.change(nameField, { target: { value: 'Hussain' } });
       expect(nameField.value).toEqual('Hussain');
     });
