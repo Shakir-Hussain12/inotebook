@@ -27,7 +27,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\"",
+    "test": "react-scripts test ",
     "eject": "react-scripts eject",
     "eslint": "eslint \"**/*.{js,jsx}\" --fix --ignore-pattern \"backend/\"",
     "style": "stylelint \"**/*.{css,scss}\" --fix",
@@ -67,5 +67,10 @@
     "stylelint-config-standard": "^21.0.0",
     "stylelint-csstree-validator": "^1.9.0",
     "stylelint-scss": "^3.21.0"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!axios)/"
+    ]
   }
 }
