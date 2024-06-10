@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginUser, registerUser } from '../Redux/Auth/authActions';
 import Popup from '../components/popup';
+import { validEmail, validPassword, validUsername } from '../utils/checkValidation';
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -11,12 +12,59 @@ const SignUp = () => {
   const { error } = useSelector((state) => state.auth) || false;
   const [isRegistering, setIsRegistering] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+
   const [user, setUser] = useState({
     first_name: '',
     last_name: '',
     email: '',
     password: '',
   });
+
+  const [errors, setErrors] = useState({
+    username: '',
+    email: '',
+    password: '',
+  });
+
+  const handleLogin = (user) => {
+    const email = validEmail(user.email);
+    const password = validPassword(user.password);
+    setErrors((prevErrors) => (
+      {
+        ...prevErrors,
+        username: '',
+        email,
+        password,
+      }
+    ));
+
+    if (email || password) {
+      return 1;
+    }
+
+    return dispatch(loginUser(user)).then(() => navigate('/'));
+  };
+
+  const handleRegister = (user) => {
+    const username = validUsername(`${user.first_name} ${user.last_name}`);
+    const email = validEmail(user.email);
+    const password = validPassword(user.password);
+
+    setErrors((prevErrors) => (
+      {
+        ...prevErrors,
+        username,
+        email,
+        password,
+      }
+    ));
+
+    if (username || email || password) {
+      return 1;
+    }
+
+    return dispatch(registerUser(user)).then(() => navigate('/'));
+  };
 
   useEffect(() => {
     const isLoggedIn = JSON.parse(localStorage.getItem('status')) || false;
@@ -110,6 +158,9 @@ const SignUp = () => {
                       value={user.last_name}
                     />
                   </div>
+                  {
+                    errors.username && <div className="col-span-6 text-red-500">{errors.username}</div>
+                  }
                 </>
               ) : null}
 
@@ -127,6 +178,9 @@ const SignUp = () => {
                   value={user.email}
                 />
               </div>
+              {
+                errors.email && <div className="col-span-6 text-red-500">{errors.email}</div>
+              }
 
               <div className="col-span-6">
                 <label htmlFor="Password" className="block text-sm font-medium text-gray-700"> Password </label>
@@ -142,6 +196,9 @@ const SignUp = () => {
                   value={user.password}
                 />
               </div>
+              {
+                errors.password && <div className="col-span-6 text-red-500">{errors.password}</div>
+              }
 
               <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
                 <button
@@ -151,11 +208,9 @@ const SignUp = () => {
                   className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
                   onClick={() => {
                     if (isRegistering) {
-                      dispatch(registerUser(user))
-                        .then(() => navigate('/'));
+                      handleRegister(user);
                     } else {
-                      dispatch(loginUser(user))
-                        .then(() => navigate('/'));
+                      handleLogin(user);
                     }
                   }}
                 >
@@ -176,6 +231,9 @@ const SignUp = () => {
                         last_name: '',
                         email: '',
                         password: '',
+                      });
+                      setErrors({
+                        username: '', password: '', email: '',
                       }); setIsRegistering(!isRegistering);
                     }}
                   >
