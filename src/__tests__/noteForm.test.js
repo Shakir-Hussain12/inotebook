@@ -1,10 +1,12 @@
-import { cleanup, render, screen, fireEvent } from '@testing-library/react';
+import {
+  cleanup, render, screen, fireEvent,
+} from '@testing-library/react';
+import { toBeOneOf } from 'jest-extended';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import store from '../Redux/store';
 import NoteState from '../context/notes/noteState';
 import NoteForm from '../components/NoteForm';
-import { toBeOneOf } from 'jest-extended';
 
 expect.extend({ toBeOneOf });
 describe('Noteform Components', () => {
