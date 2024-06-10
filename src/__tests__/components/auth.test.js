@@ -2,6 +2,8 @@ import {
   render, screen, fireEvent,
   cleanup,
 } from '@testing-library/react';
+
+import axios from 'axios';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import NoteState from '../../context/notes/noteState';
@@ -98,6 +100,43 @@ describe('Authenticate Page', () => {
       fireEvent.click(loginButton);
       const errorElement = await screen.findByTestId('passError');
       expect(errorElement).toBeInTheDocument();
+    });
+
+    it('throws error on invalid credentials', async () => {
+      jest.spyOn(axios, 'post').mockRejectedValueOnce({
+        response: {
+          data: {
+            err: 'Invalid Credentials',
+          },
+        },
+      });
+
+      const emailField = screen.getByTestId('email');
+      const passwordField = screen.getByTestId('password');
+      const loginButton = screen.getByRole('button', { name: /Login/i });
+      fireEvent.change(emailField, { target: { value: 'shakir@gmail.com' } });
+      fireEvent.change(passwordField, { target: { value: 'password' } });
+      fireEvent.click(loginButton);
+      const errorMessage = await screen.findByText(/Invalid Credentials/i);
+      expect(errorMessage).toBeInTheDocument();
+    });
+
+    it('shows successfull message on correct credentials', async () => {
+      jest.spyOn(axios, 'post').mockResolvedValueOnce({
+        data: {
+          accessToken: '1dsad214asfsafdgvcndfdfh',
+          refreshToken: '1dsad214asfsafdgasdasd',
+        },
+      });
+
+      const emailField = screen.getByTestId('email');
+      const passwordField = screen.getByTestId('password');
+      const loginButton = screen.getByRole('button', { name: /Login/i });
+      fireEvent.change(emailField, { target: { value: 'shakir@gmail.com' } });
+      fireEvent.change(passwordField, { target: { value: 'password' } });
+      fireEvent.click(loginButton);
+      const errorMessage = screen.queryByText(/Invalid Credentials/i);
+      expect(errorMessage).not.toBeInTheDocument();
     });
   });
 
