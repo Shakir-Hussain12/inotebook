@@ -35,12 +35,10 @@ describe('Home Page', () => {
   });
 
   it('shows form when clicked on Add a new Note button', async () => {
-    await act(async () => {
-      const formButton = screen.getByRole('button', { name: /Add a new Note/i });
-      fireEvent.click(formButton);
-    });
+    const formButton = screen.getByRole('button', { name: /Add a new Note/i });
+    fireEvent.click(formButton);
 
-    const formElement = screen.getByTestId('noteForm');
+    const formElement = await screen.findByTestId('noteForm');
     expect(formElement).toBeInTheDocument();
   });
 });
