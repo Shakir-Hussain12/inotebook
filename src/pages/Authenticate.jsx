@@ -159,7 +159,7 @@ const SignUp = () => {
                     />
                   </div>
                   {
-                    errors.username && <div data-testId="nameError" className="col-span-6 text-red-500">{errors.username}</div>
+                    errors.username && <div data-testid="nameError" className="col-span-6 text-red-500">{errors.username}</div>
                   }
                 </>
               ) : null}
@@ -179,7 +179,7 @@ const SignUp = () => {
                 />
               </div>
               {
-                errors.email && <div data-testId="emailError" className="col-span-6 text-red-500">{errors.email}</div>
+                errors.email && <div data-testid="emailError" className="col-span-6 text-red-500">{errors.email}</div>
               }
 
               <div className="col-span-6">
@@ -197,7 +197,7 @@ const SignUp = () => {
                 />
               </div>
               {
-                errors.password && <div data-testId="passError" className="col-span-6 text-red-500">{errors.password}</div>
+                errors.password && <div data-testid="passError" className="col-span-6 text-red-500">{errors.password}</div>
               }
 
               <div className="col-span-6 sm:flex sm:items-center sm:gap-4">

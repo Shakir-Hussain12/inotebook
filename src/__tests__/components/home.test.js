@@ -3,9 +3,9 @@ import {
 } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import store from '../Redux/store';
-import NoteState from '../context/notes/noteState';
-import Home from '../pages/Home';
+import store from '../../Redux/store';
+import NoteState from '../../context/notes/noteState';
+import Home from '../../pages/Home';
 
 describe('Home Page', () => {
   beforeEach(() => {

@@ -4,9 +4,9 @@ import {
 } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import NoteState from '../context/notes/noteState';
-import store from '../Redux/store';
-import Authenticate from '../pages/Authenticate';
+import NoteState from '../../context/notes/noteState';
+import store from '../../Redux/store';
+import Authenticate from '../../pages/Authenticate';
 
 describe('Authenticate Page', () => {
   beforeEach(() => {

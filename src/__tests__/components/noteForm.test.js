@@ -4,9 +4,9 @@ import {
 import { toBeOneOf } from 'jest-extended';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import store from '../Redux/store';
-import NoteState from '../context/notes/noteState';
-import NoteForm from '../components/NoteForm';
+import store from '../../Redux/store';
+import NoteState from '../../context/notes/noteState';
+import NoteForm from '../../components/NoteForm';
 
 expect.extend({ toBeOneOf });
 describe('Noteform Components', () => {
