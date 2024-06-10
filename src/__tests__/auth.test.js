@@ -63,6 +63,42 @@ describe('Authenticate Page', () => {
       fireEvent.change(passwordField, { target: { value: 'password' } });
       expect(passwordField.value).toEqual('password');
     });
+
+    it('checks if button is disbled upon empty password field', async () => {
+      const emailField = screen.getByTestId('email');
+      const loginButton = screen.getByRole('button', { name: /Login/i });
+      fireEvent.change(emailField, { target: { value: 'shakir' } });
+      expect(loginButton).toHaveAttribute('disabled');
+    });
+
+    it('checks if button is disbled upon empty email field', async () => {
+      const passwordField = screen.getByTestId('password');
+      const loginButton = screen.getByRole('button', { name: /Login/i });
+      fireEvent.change(passwordField, { target: { value: 'shakir' } });
+      expect(loginButton).toHaveAttribute('disabled');
+    });
+
+    it('throws error if email has invalid format', async () => {
+      const emailField = screen.getByTestId('email');
+      const passwordField = screen.getByTestId('password');
+      const loginButton = screen.getByRole('button', { name: /Login/i });
+      fireEvent.change(emailField, { target: { value: 'shakir' } });
+      fireEvent.change(passwordField, { target: { value: 'shakir' } });
+      fireEvent.click(loginButton);
+      const errorElement = await screen.findByTestId('emailError');
+      expect(errorElement).toBeInTheDocument();
+    });
+
+    it('throws error if password is too short', async () => {
+      const emailField = screen.getByTestId('email');
+      const passwordField = screen.getByTestId('password');
+      const loginButton = screen.getByRole('button', { name: /Login/i });
+      fireEvent.change(emailField, { target: { value: 'shakir@gmail.com' } });
+      fireEvent.change(passwordField, { target: { value: '1234' } });
+      fireEvent.click(loginButton);
+      const errorElement = await screen.findByTestId('passError');
+      expect(errorElement).toBeInTheDocument();
+    });
   });
 
   describe('Registration Tests', () => {
@@ -111,6 +147,21 @@ describe('Authenticate Page', () => {
       const passwordField = screen.getByTestId('password');
       fireEvent.change(passwordField, { target: { value: 'password' } });
       expect(passwordField.value).toEqual('password');
+    });
+
+    it('throws error if username is too short', async () => {
+      const firstNameField = screen.getByTestId('first-name');
+      const secondNameField = screen.getByTestId('last-name');
+      const emailField = screen.getByTestId('email');
+      const passwordField = screen.getByTestId('password');
+      const registerButton = screen.getByRole('button', { name: /register/i });
+      fireEvent.change(firstNameField, { target: { value: 'sh' } });
+      fireEvent.change(secondNameField, { target: { value: 'ir' } });
+      fireEvent.change(emailField, { target: { value: 'shakir@gmail.com' } });
+      fireEvent.change(passwordField, { target: { value: '1234' } });
+      fireEvent.click(registerButton);
+      const errorElement = await screen.findByTestId('nameError');
+      expect(errorElement).toBeInTheDocument();
     });
   });
 });
