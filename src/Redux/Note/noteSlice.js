@@ -30,7 +30,7 @@ export const noteSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchNotes.pending, (state) => (
-        { ...state, isLoading: true }
+        { ...state, isLoading: true, error: null }
       ))
       .addCase(fetchNotes.fulfilled, (state, { payload }) => {
         const newNotes = [];
@@ -43,10 +43,11 @@ export const noteSlice = createSlice({
           ...state,
           notes: newNotes,
           isLoading: false,
+          error: null,
         };
       })
       .addCase(fetchNotes.rejected, (state, { payload }) => (
-        { ...state, isLoading: true, error: payload }
+        { ...state, isLoading: false, error: payload }
       ))
 
       .addCase(addNote.fulfilled, (state, { payload }) => {
