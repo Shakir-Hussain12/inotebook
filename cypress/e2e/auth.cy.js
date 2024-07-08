@@ -41,4 +41,22 @@ describe('Authentication tests', () => {
     cy.get('[name=submitButton]').contains('Login').should('exist');
   });
 
+  it('redirects to Home Page upon successful login', () => {
+    cy.intercept('POST', 'http://localhost:5000/api/auth/login', {
+      statusCode: 200,
+      body: { message: 'Logged In Successfully' },
+    }).as('mockPostResponse');
+
+    cy.get('[data-testid="email"]').type('johndoe@gmail.com');
+    cy.get('[data-testid="password"]').type('123456');
+    cy.get('[name=submitButton]').click();
+
+    cy.wait('@mockPostResponse').then((postInterceptor) => {
+      expect(postInterceptor.response.statusCode).to.eq(200);
+      expect(postInterceptor.response.body).to.have.property('message', 'Logged In Successfully');
+    });
+
+    cy.url().should('include', '/');
+    cy.contains('My Notes').should('exist');
+  });
 });
