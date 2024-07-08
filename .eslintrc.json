@@ -6,6 +6,9 @@
     },
     "parser": "@babel/eslint-parser",
     "parserOptions": {
+      "babelOptions": {
+        "plugins": [["@babel/plugin-proposal-decorators", { "legacy": true }]]
+      },
       "ecmaFeatures": {
         "jsx": true
       },

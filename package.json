@@ -31,7 +31,8 @@
     "eject": "react-scripts eject",
     "eslint": "eslint \"**/*.{js,jsx}\" --fix --ignore-pattern \"backend/\"",
     "style": "stylelint \"**/*.{css,scss}\" --fix",
-    "both": "concurrently \"npm run start\" \"npx nodemon backend/index.js\""
+    "both": "concurrently \"npm run start\" \"npx nodemon backend/index.js\"",
+    "cy": "cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -56,6 +57,7 @@
     "@babel/eslint-parser": "^7.22.9",
     "@babel/plugin-syntax-jsx": "^7.22.5",
     "@babel/preset-react": "^7.22.5",
+    "cypress": "^13.13.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.27.5",
