@@ -59,4 +59,30 @@ describe('Authentication tests', () => {
     cy.url().should('include', '/');
     cy.contains('My Notes').should('exist');
   });
+
+  it('logs the user out', () => {
+    cy.login('dummyUser@gmail.com', '123456');
+
+    cy.intercept('GET', 'http://localhost:5000/api/notes', {
+      statusCode: 200,
+      body: [],
+    }).as('mockGetResponse');
+
+    cy.wait('@mockGetResponse');
+
+    cy.intercept('GET', 'http://localhost:5000/api/auth/logout', {
+      statusCode: 200,
+      body: { message: 'Logged Out Successfully' },
+    }).as('mockLogoutResponse');
+
+    cy.get('[data-testid="dropButton"]').click();
+    cy.get('[data-testid="logout"]').click();
+
+    cy.wait('@mockLogoutResponse').then((postInterceptor) => {
+      expect(postInterceptor.response.statusCode).to.eq(200);
+      expect(postInterceptor.response.body).to.have.property('message', 'Logged Out Successfully');
+    });
+
+    cy.url().should('include', '/auth');
+  });
 });
