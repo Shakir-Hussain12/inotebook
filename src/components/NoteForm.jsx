@@ -41,7 +41,15 @@ const NoteForm = () => {
 
               <label htmlFor="Tag">
                 <span className="text-lg">Type</span>
-                <select id="Tag" name="Tag" aria-label="Tag Control" className="border rounded-lg ms-2 bg-slate-700 text-white" required defaultValue={tag} onChange={(e) => setTag(e.target.value)}>
+                <select
+                  id="Tag"
+                  name="Tag"
+                  aria-label="Tag Control"
+                  className="border rounded-lg ms-2 bg-slate-700 text-white"
+                  required
+                  defaultValue={tag}
+                  onChange={(e) => setTag(e.target.value)}
+                >
                   <option value="General">General</option>
                   <option value="Work">Work</option>
                   <option value="Personal">Personal</option>

@@ -36,17 +36,20 @@ const NoteItem = ({
 
           <div>
             <select
+              data-testid="tagEdit"
               className="rounded border border-indigo-500 bg-indigo-500 px-3 py-1.5 text-[10px] font-medium text-white text-wrap"
               disabled={!isEditable}
               onChange={(e) => setNoteTag(e.target.value)}
               defaultValue={noteTag}
             >
               <option value="General">General</option>
-              <option value="Specific">Specific</option>
+              <option value="Work">Work</option>
+              <option value="Personal">Personal</option>
             </select>
 
             <h3 className="mt-4 text-lg font-medium sm:text-xl text-wrap">
               <input
+                data-testid="titleEdit"
                 type="text"
                 className="bg-white"
                 defaultValue={noteTitle}
@@ -57,6 +60,7 @@ const NoteItem = ({
             </h3>
 
             <textarea
+              data-testid="descriptionEdit"
               className="text-sm text-gray-700 resize-none min-w-full min-h-36 mt-3 bg-white text-wrap"
               disabled={!isEditable}
               onChange={(e) => setNoteDescription(e.target.value)}

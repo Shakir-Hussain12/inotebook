@@ -70,7 +70,7 @@ const Navbar = () => {
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative ml-3">
                     <div>
-                      <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                      <Menu.Button data-testid="dropButton" className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                         <span className="absolute -inset-1.5" />
                         <span className="sr-only">Open user menu</span>
                         <img
@@ -110,6 +110,7 @@ const Navbar = () => {
 
                         <Menu.Item>
                           <NavLink
+                            data-testid="logout"
                             className={({ isActive }) => getClassName(isActive, 'big', 'two')}
                             onClick={() => { logoutUser().then(() => navigate('/auth')); }}
                           >
