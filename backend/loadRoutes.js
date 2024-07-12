@@ -12,21 +12,4 @@ const loadRoutes = (app) => {
   });
 };
 
-const swaggerOptions = {
-  swaggerDefinition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'iNoteBook API',
-      version: '1.0',
-      description: 'API documentation for iNoteBook application',
-    },
-    servers: [
-      {
-        url: 'http://localhost:5000',
-      },
-    ],
-  },
-  apis: ['./routes/*.js'],
-};
-
-module.exports = { swaggerOptions, loadRoutes };
+module.exports = { loadRoutes };
