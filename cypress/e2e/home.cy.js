@@ -95,4 +95,47 @@ describe('Home Page tests', () => {
     cy.get('[name="addNote"]').should('exist');
     cy.get('[data-testid="noteItem"]').should('not.exist');
   });
+
+  it('reflects changes to an edited note', () => {
+    cy.intercept('GET', 'http://localhost:5000/api/notes', {
+      statusCode: 200,
+      body: [
+        {
+          _id: '1',
+          tag: 'General',
+          title: 'First Note',
+          description: 'This is the first note',
+        },
+      ],
+    }).as('mockGetResponse');
+
+    cy.intercept('PUT', 'http://localhost:5000/api/notes/1', {
+      statusCode: 200,
+      body: {
+        note: {
+          _id: '1',
+          tag: 'Personal',
+          title: 'Edited Note',
+          description: 'This is the edited note',
+        },
+      },
+    }).as('mockPostResponse');
+
+    cy.wait('@mockGetResponse');
+
+    cy.get('[name="editButton"]').click();
+    cy.get('[name="deleteButton"]').should('be.disabled');
+    cy.get('[data-testid="titleEdit"]').should('be.focused');
+    cy.get('[data-testid="titleEdit"]').clear().type('Edited Note');
+    cy.get('[data-testid="tagEdit"]').select('Personal');
+    cy.get('[data-testid="descriptionEdit"]').clear().type('This is the edited note');
+    cy.get('[name="saveButton"]').click();
+
+    cy.wait('@mockPostResponse').then((interceptor) => {
+      expect(interceptor.response.statusCode).to.eq(200);
+    });
+
+    cy.get('[value="Edited Note"]').should('exist');
+    cy.contains('This is the edited note').should('exist');
+  });
 });
