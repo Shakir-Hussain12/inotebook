@@ -1,0 +1,110 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "MERN API",
+      "version": "1.0.0",
+      "description": "API documentation for MERN application"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:5000"
+      }
+    ],
+    "components": {
+      "schemas": {
+        "User": {
+          "type": "object",
+          "required": ["name", "email", "password"],
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "The auto-generated id of the user"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the user"
+            },
+            "email": {
+              "type": "string",
+              "description": "The email of the user"
+            },
+            "password": {
+              "type": "string",
+              "description": "The password of the user"
+            },
+            "date": {
+              "type": "string",
+              "description": "The date the user was created"
+            }
+          },
+          "example": {
+            "id": "d5fE_asz",
+            "name": "John Doe",
+            "email": "johndoe@example.com",
+            "password": "123456"
+          }
+        },
+        "Note": {
+          "type": "object",
+          "required": ["tag", "title", "description"],
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "The auto-generated id of the Note"
+            },
+            "user": {
+              "type": "string",
+              "description": "The id of the user who created the note"
+            },
+            "tag": {
+              "type": "string",
+              "description": "The tag of the Note"
+            },
+            "title": {
+              "type": "string",
+              "description": "The title of the Note"
+            },
+            "description": {
+              "type": "string",
+              "description": "The description of the Note"
+            },
+            "date": {
+              "type": "string",
+              "description": "The date the Note was created"
+            }
+          },
+          "example": {
+            "id": "d5fE_asz",
+            "user": "d5fE_asz312",
+            "tag": "Personal",
+            "title": "First Note",
+            "description": "This is my very first Note"
+          }
+        }
+      }
+    },
+    "paths": {
+      "/api/auth": {
+        "get": {
+          "summary": "Returns the list of all users",
+          "tags": ["Users"],
+          "responses": {
+            "200": {
+              "description": "The list of users",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+}
+  
