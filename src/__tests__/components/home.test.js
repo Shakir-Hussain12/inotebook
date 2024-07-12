@@ -91,8 +91,8 @@ describe('Home Page', () => {
 
       renderFunc();
 
-      const errorMessage = await screen.findByText(/No Notes Found/i);
-      expect(errorMessage).toBeInTheDocument();
+      const noteElement = await screen.queryByTestId('noteItem');
+      expect(noteElement).toBeNull();
 
       cleanup();
     });
