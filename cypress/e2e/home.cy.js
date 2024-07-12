@@ -138,4 +138,35 @@ describe('Home Page tests', () => {
     cy.get('[value="Edited Note"]').should('exist');
     cy.contains('This is the edited note').should('exist');
   });
+
+  it('deletes a note from the home page', () => {
+    cy.intercept('GET', 'http://localhost:5000/api/notes', {
+      statusCode: 200,
+      body: [
+        {
+          _id: '1',
+          tag: 'General',
+          title: 'First Note',
+          description: 'This is the first note',
+        },
+      ],
+    }).as('mockGetResponse');
+
+    cy.intercept('DELETE', 'http://localhost:5000/api/notes/1', {
+      statusCode: 200,
+      body: {
+        message: 'Note deleted successfully',
+      },
+    }).as('mockDeleteResponse');
+
+    cy.wait('@mockGetResponse');
+
+    cy.get('[name="deleteButton"]').click();
+
+    cy.wait('@mockDeleteResponse').then((interceptor) => {
+      expect(interceptor.response.statusCode).to.eq(200);
+    });
+
+    cy.get('[data-testid="noteItem"]').should('not.exist');
+  });
 });
