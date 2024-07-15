@@ -125,7 +125,7 @@ After you're finished please remove all the comments and instructions!
 - cd backend
 - npm start
 - visit 'localhost:5000/api-docs'
-
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- LIVE DEMO -->
 
@@ -134,10 +134,11 @@ After you're finished please remove all the comments and instructions!
 > Link to Live Demo
 - In progress...
 <!-- - [Live Demo Link]() -->
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Loom Video <a name="loom"></a>
 > Link to Loom Video
-- In progres...
+- In progress...
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
@@ -148,7 +149,7 @@ After you're finished please remove all the comments and instructions!
 
 ### Prerequisites
 
-In order to run this project you need:
+Inorder to run this project you need:
 - node
 - npm
 - VSCode or other IDE
@@ -171,7 +172,7 @@ Install this project with:
 > To run the project, execute the following command:
 - npm start
 
-> To run Server Side, execute the following commands:
+> To run the Server Side, execute the following commands:
 - cd backend
 - npm start
 
@@ -184,7 +185,7 @@ Install this project with:
 **For E2E tests, run the following command**
 - npm run cy
 
-  It will open cypress UI & you can use it to run the tests manually
+  It will open Cypress UI & you can use it to run the tests manually
 
 ### Deployment
 - In progress...
