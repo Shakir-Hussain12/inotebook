@@ -65,7 +65,7 @@ router.put('/:id', authorize, async (req, res) => {
 
     await Note.findOneAndUpdate({ user: req.user?.id, _id: id }, req.body);
     note = await Note.findOne({ user: req.user?.id, _id: id });
-    return res.status(200).json({ note });
+    return res.status(200).json({ msg: 'Note Updated', note });
   } catch (err) {
     return res.status(500).json({ Error: 'Internal Server Error' });
   }
