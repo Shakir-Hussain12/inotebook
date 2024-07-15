@@ -31,7 +31,7 @@ After you're finished please remove all the comments and instructions!
   - [🛠 Built With ](#-built-with-)
     - [Tech Stack ](#tech-stack-)
     - [Key Features ](#key-features-)
-  - [API Documentation](#-api-docs)
+  - [API Documentation](#api-docs)
   - [🚀 Live Demo ](#-live-demo-)
   - [Loom Video ](#loom-video-)
   - [💻 Getting Started ](#-getting-started-)
