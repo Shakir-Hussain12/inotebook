@@ -18,6 +18,8 @@ backend/.env
 .env.development.local
 .env.test.local
 .env.production.local
+wifiControl.py
+script_log.log
 
 npm-debug.log*
 yarn-debug.log*
