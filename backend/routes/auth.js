@@ -113,6 +113,7 @@ router.post('/getuser', authorize, async (req, res) => {
   }
 });
 
+// refresh Auth token
 router.get('/refresh', refreshAuthorize, async (req, res) => {
   try {
     const accessToken = jwt.sign({ user: req.user }, process.env.SECRET_KEY, { expiresIn: '1h' });
@@ -123,6 +124,7 @@ router.get('/refresh', refreshAuthorize, async (req, res) => {
   }
 });
 
+// log out user
 router.get('/logout', async (req, res) => {
   try {
     res.clearCookie('token');
