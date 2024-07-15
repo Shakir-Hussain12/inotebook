@@ -238,6 +238,66 @@
           }
         }
       }
+    },
+    "/api/auth/logout": {
+      "get": {
+        "summary": "Logs User out and deletes cookies",
+        "tags": ["Auth"],
+        "responses": {
+          "200": {
+            "headers": {
+              "Set-Cookie": {
+                "description": "delete token & refreshToken cookie",
+                "schema": {
+                  "type": "string",
+                  "example": "token= '' { Max-Age=0, httpOnly, domain=localhost, path=/ }"
+                }
+              }
+            },
+            "description": "User logged out successfully"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/api/auth/refresh": {
+      "get": {
+        "summary": "Refreshes the authToken",
+        "tags": ["Auth"],
+        "parameters": [
+          {
+            "name": "refreshToken",
+            "in": "cookie",
+            "required": true,
+            "description": "refreshToken"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "authToken refreshed successfully",
+            "headers": {
+              "Set-Cookie": {
+                "description": "set token cookie",
+                "schema": {
+                  "type": "string",
+                  "example": "token=eyJsae1dsa.1e1esafd1dsd.131313dsad1 { httpOnly: true, domain: 'localhost', path: '/' }"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid credentials"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
     }
   }
 }
