@@ -119,7 +119,7 @@ After you're finished please remove all the comments and instructions!
 
 <!-- API Documentation -->
 
-## API documentation <a name="api-docs"></a>
+### API Documentation <a name="api-docs"></a>
 
 > To see API documentation, execute the following commands
 - cd backend
