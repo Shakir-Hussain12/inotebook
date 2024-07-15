@@ -81,6 +81,14 @@
           "description": "This is my very first Note"
         }
       }
+    },
+    "securitySchemes": {
+      "cookieAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "token",
+        "description": "JWT token for authorization"
+      }
     }
   },
   "paths": {
@@ -101,6 +109,47 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/auth/createuser": {
+      "post": {
+        "summary": "Registers a new user",
+        "tags": ["Auth"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties":{
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the user"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "The email of the user"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "The password of the user"
+                  }
+                },
+                "required": ["name", "email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "response": "User registered successfully"
+          },
+          "400": {
+            "description": "Invalid credentials"
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       }
@@ -150,6 +199,39 @@
           },
           "400": {
             "description": "Invalid credentials"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/api/auth/getuser": {
+      "post": {
+        "summary": "Get Details Of Current User",
+        "tags": ["Auth"],
+        "description": "Get Details Of Current User using JWT token sent as cookie",
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Details of the current user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid credentials"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Server error"

@@ -20,6 +20,35 @@ router.get('/', async (req, res) => {
   }
 });
 
+// sign-up route
+router.post('/createuser', [
+  body('name', 'Name too short').isLength({ min: 6 }),
+  body('email', 'Invalid Email').isEmail(),
+  body('password', 'Password too short').isLength({ min: 6 }),
+], async (req, res) => {
+  const err = validationResult(req);
+  if (!err.isEmpty()) {
+    return res.status(400).json({ err: err.array()[0].msg });
+  }
+  try {
+    let user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      const salt = await bcrypt.genSalt(10);
+      const secPass = await bcrypt.hash(req.body.password, salt);
+      user = await User.create({
+        name: req.body.name,
+        email: req.body.email,
+        password: secPass,
+      });
+
+      return res.json({ response: 'User created successfully!' });
+    }
+    return res.json({ response: "Couldn't create user", error: 'Email already in use' });
+  } catch (err) {
+    return res.status(500).json({ err: 'Internal Server Error' });
+  }
+});
+
 // login route
 router.post('/login', [
   body('email', 'Invalid Email').isEmail(),
@@ -63,35 +92,6 @@ router.post('/login', [
     res.cookie('refreshToken', refreshToken, { httpOnly: true, domain: 'localhost', path: '/' });
     res.json({ accessToken, refreshToken });
     return res;
-  } catch (err) {
-    return res.status(500).json({ err: 'Internal Server Error' });
-  }
-});
-
-// sign-up route
-router.post('/createuser', [
-  body('name', 'Name too short').isLength({ min: 6 }),
-  body('email', 'Invalid Email').isEmail(),
-  body('password', 'Password too short').isLength({ min: 6 }),
-], async (req, res) => {
-  const err = validationResult(req);
-  if (!err.isEmpty()) {
-    return res.status(400).json({ err: err.array()[0].msg });
-  }
-  try {
-    let user = await User.findOne({ email: req.body.email });
-    if (!user) {
-      const salt = await bcrypt.genSalt(10);
-      const secPass = await bcrypt.hash(req.body.password, salt);
-      user = await User.create({
-        name: req.body.name,
-        email: req.body.email,
-        password: secPass,
-      });
-
-      return res.json({ response: 'User created successfully!' });
-    }
-    return res.json({ response: "Couldn't create user", error: 'Email already in use' });
   } catch (err) {
     return res.status(500).json({ err: 'Internal Server Error' });
   }
