@@ -74,8 +74,8 @@ exports.login = async (req, res) => {
       await Token.findOneAndUpdate({ userId: user.id }, { token: refreshToken });
     }
 
-    res.cookie('token', accessToken, { httpOnly: true, domain: 'localhost', path: '/' });
-    res.cookie('refreshToken', refreshToken, { httpOnly: true, domain: 'localhost', path: '/' });
+    res.cookie('token', accessToken, { httpOnly: true, path: '/' });
+    res.cookie('refreshToken', refreshToken, { httpOnly: true, path: '/' });
     res.json({ accessToken, refreshToken });
     return res;
   } catch (err) {
@@ -101,7 +101,7 @@ exports.getUser = async (req, res) => {
 exports.refreshToken = async (req, res) => {
   try {
     const accessToken = jwt.sign({ user: req.user }, process.env.SECRET_KEY, { expiresIn: '1h' });
-    res.cookie('token', accessToken, { httpOnly: true, domain: 'localhost', path: '/' });
+    res.cookie('token', accessToken, { httpOnly: true, path: '/' });
     return res.json({ accessToken });
   } catch (error) {
     return res.status(500).json({ error });
