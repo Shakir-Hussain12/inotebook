@@ -1,8 +1,6 @@
 services:
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    image: public.ecr.aws/f2f9i4t4/inotebook:latest
     ports:
       - "5000:5000"
     volumes:
