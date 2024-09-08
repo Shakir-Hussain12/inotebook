@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-alert */
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Loaderpage from '../components/loaderPage';
 import Navbar from '../components/Navbar';
@@ -9,6 +9,7 @@ import NoteForm from '../components/NoteForm';
 import NoteItem from '../components/NoteItem';
 import { fetchNotes } from '../Redux/Note/noteActions';
 import { fetchUser } from '../Redux/Auth/authActions';
+import { updateNotes } from '../Redux/Note/noteSlice';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,19 @@ const Home = () => {
     dispatch(fetchNotes());
     dispatch(fetchUser());
   }, []);
+
+  const [currentNote, setCurrentNote] = useState(0);
+  const [swapNote, setSwapNote] = useState(0);
+
+  const handleSwap = () => {
+    if (currentNote === swapNote) return;
+
+    const updatedNotes = [...notes];
+    // eslint-disable-next-line max-len
+    [updatedNotes[currentNote], updatedNotes[swapNote]] = [updatedNotes[swapNote], updatedNotes[currentNote]];
+
+    dispatch(updateNotes(updatedNotes));
+  };
 
   const { activeForm, setactiveForm } = context;
   const id = '_id';
@@ -60,8 +74,21 @@ const Home = () => {
           isLoadingNotes ? <Loaderpage /> : (
             <div className="grid md:grid-cols-2 gap-3 px-5">
               {
-                notes.map((note) => (
-                  <NoteItem key={note[id]} data={note} />
+                notes.map((note, index) => (
+                  <div
+                    className="rounded-xl bg-white p-4 ring ring-indigo-50 sm:p-6 lg:p-8"
+                    data-testid="noteItem"
+                    draggable
+                    onDragStart={() => setCurrentNote(index)}
+                    onDragEnter={() => setSwapNote(index)}
+                    onDragEnd={handleSwap}
+                    onDragOver={(e) => e.preventDefault()}
+                    key={note[id]}
+                  >
+                    <NoteItem
+                      data={note}
+                    />
+                  </div>
                 ))
               }
             </div>

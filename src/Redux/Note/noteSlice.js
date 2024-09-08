@@ -25,6 +25,11 @@ export const noteSlice = createSlice({
     },
     resetNotes: (state) => {
       state.notes = [];
+      return state;
+    },
+    updateNotes: (state, { payload }) => {
+      state.notes = [...payload];
+      return state;
     },
   },
   extraReducers: (builder) => {
@@ -81,5 +86,5 @@ export const noteSlice = createSlice({
   },
 });
 
-export const { setIsEditable, resetNotes } = noteSlice.actions;
+export const { setIsEditable, resetNotes, updateNotes } = noteSlice.actions;
 export default noteSlice.reducer;
