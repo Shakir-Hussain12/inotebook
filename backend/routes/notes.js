@@ -13,7 +13,7 @@ router.get('/', authorize, getNotes);
 
 // add new note
 router.post('/', [
-  body('title', '10 < Title Length < 20').isLength({ min: 10, max: 20 }),
+  body('title', '10 < Title Length').isLength({ min: 10 }),
   body('description', 'Description should be greate than 10 characters').isLength({ min: 10 }),
 ], authorize, addNewNote);
 
